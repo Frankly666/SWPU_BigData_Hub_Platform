@@ -1,13 +1,9 @@
 import styled from "styled-components";
 
 export const AppWrapper = styled.div`
-  width: 1475px;
+  width: 100vw;
   height: 100vh;
-  margin: 0 auto;
-
-  .Header {
-    background-color: #fff;
-  }
+  background-color: var(-main-bg-color);
 `;
 
 export const headerStyle: React.CSSProperties = {
@@ -17,7 +13,8 @@ export const headerStyle: React.CSSProperties = {
   color: "black",
   height: 64,
   lineHeight: "64px",
-  backgroundColor: "#fff"
+  backgroundColor: `#fff`,
+  borderBottom: "1px solid rgba(3,3,3,.2)"
 };
 
 export const contentStyle: React.CSSProperties = {
@@ -25,7 +22,8 @@ export const contentStyle: React.CSSProperties = {
   minHeight: 120,
   lineHeight: "120px",
   color: "black",
-  backgroundColor: "#fff"
+  backgroundColor: "#fff",
+  borderBottom: "1px solid rgba(3,3,3,.2)"
 };
 
 export const footerStyle: React.CSSProperties = {

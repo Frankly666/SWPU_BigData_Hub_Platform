@@ -3,6 +3,8 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "normalize.css";
+import "./assets/style/index.less";
+
 import { HashRouter } from "react-router-dom";
 
 const root = ReactDOM.createRoot(
