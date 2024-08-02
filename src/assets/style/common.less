@@ -1,9 +1,17 @@
 :root {
   -main-bg-color: #fff;
-  -main-word-color: #1B1B1B;
+  -main-word-color: #1b1b1b;
 }
 
 .wrapper01 {
   width: 1475px;
   margin: 0 auto;
+}
+
+// header下拉框hover样式重置
+:where(.css-dev-only-do-not-override-xlmt2j).ant-dropdown
+  .ant-dropdown-menu
+  .ant-dropdown-menu-title-content
+  > a:hover {
+  color: #1677ff;
 }
