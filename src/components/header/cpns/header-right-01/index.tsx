@@ -3,6 +3,7 @@ import type { FC, ReactNode } from "react";
 import { Button, Modal } from "antd";
 
 import HeaderRightWrapper01 from "./style";
+import Login from "@/components/login";
 
 interface IProps {
   children?: ReactNode;
@@ -26,28 +27,24 @@ const HeaderRight: FC<IProps> = () => {
           注册
         </Button>
         <Modal
-          title="登录页面"
-          centered
+          maskClosable={false}
+          footer={null}
           open={loginOpen}
           onOk={() => setLoginOpen(false)}
           onCancel={() => setLoginOpen(false)}
           width={600}
         >
-          <p>some contents...</p>
-          <p>some contents...</p>
-          <p>some contents...</p>
+          <Login isLogin={true}></Login>
         </Modal>
         <Modal
-          title="注册页面"
-          centered
+          maskClosable={false}
+          footer={null}
           open={enrollOpen}
           onOk={() => setEnrollOpen(false)}
           onCancel={() => setEnrollOpen(false)}
           width={600}
         >
-          <p>some contents...</p>
-          <p>some contents...</p>
-          <p>some contents...</p>
+          <Login isLogin={false}></Login>
         </Modal>
       </div>
     </HeaderRightWrapper01>

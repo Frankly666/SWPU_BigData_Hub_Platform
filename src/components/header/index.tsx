@@ -13,7 +13,7 @@ interface IProps {
   children?: ReactNode;
 }
 
-const header: FC<IProps> = () => {
+const header: FC<IProps> = memo(() => {
   const navigate = useNavigate();
   const toHome = () => {
     navigate("/home");
@@ -35,6 +35,6 @@ const header: FC<IProps> = () => {
       <div className="right">{<HeaderRight01 />}</div>
     </HeaderWrapper>
   );
-};
+});
 
-export default memo(header);
+export default header;
