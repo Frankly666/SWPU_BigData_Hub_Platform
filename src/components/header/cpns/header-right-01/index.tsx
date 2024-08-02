@@ -34,7 +34,7 @@ const HeaderRight: FC<IProps> = () => {
           onCancel={() => setLoginOpen(false)}
           width={600}
         >
-          <Login isLogin={true}></Login>
+          <Login isLogin={true} setLoginOpen={setLoginOpen}></Login>
         </Modal>
         <Modal
           maskClosable={false}
@@ -44,7 +44,7 @@ const HeaderRight: FC<IProps> = () => {
           onCancel={() => setEnrollOpen(false)}
           width={600}
         >
-          <Login isLogin={false}></Login>
+          <Login isLogin={false} setEnrollOpen={setEnrollOpen}></Login>
         </Modal>
       </div>
     </HeaderRightWrapper01>

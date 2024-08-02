@@ -18,50 +18,10 @@ import EnrollFormWrapper from "./style";
 
 interface IProps {
   children?: ReactNode;
-}
-
-interface DataNodeType {
-  value: string;
-  label: string;
-  children?: DataNodeType[];
+  setEnrollOpen: any;
 }
 
 const { Option } = Select;
-
-const residences: CascaderProps<DataNodeType>["options"] = [
-  {
-    value: "zhejiang",
-    label: "Zhejiang",
-    children: [
-      {
-        value: "hangzhou",
-        label: "Hangzhou",
-        children: [
-          {
-            value: "xihu",
-            label: "West Lake"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    value: "jiangsu",
-    label: "Jiangsu",
-    children: [
-      {
-        value: "nanjing",
-        label: "Nanjing",
-        children: [
-          {
-            value: "zhonghuamen",
-            label: "Zhong Hua Men"
-          }
-        ]
-      }
-    ]
-  }
-];
 
 const formItemLayout = {
   labelCol: {
@@ -165,7 +125,15 @@ const EnrollForm: FC<IProps> = () => {
             {
               required: true,
               message: "密码不能为空!"
-            }
+            },
+            () => ({
+              validator(_, value) {
+                if (value.length < 6) {
+                  return Promise.reject(new Error("密码最小长度为6位"));
+                }
+                return Promise.resolve();
+              }
+            })
           ]}
           hasFeedback
         >
@@ -184,10 +152,13 @@ const EnrollForm: FC<IProps> = () => {
             },
             ({ getFieldValue }) => ({
               validator(_, value) {
-                if (!value || getFieldValue("password") === value) {
-                  return Promise.resolve();
+                if (getFieldValue("password") !== value) {
+                  return Promise.reject(new Error("两次密码输入不相同!"));
+                } else if (value.length < 6) {
+                  return Promise.reject(new Error("密码最小长度为6位"));
                 }
-                return Promise.reject(new Error("两次密码输入不相同!"));
+
+                return Promise.resolve();
               }
             })
           ]}
@@ -196,16 +167,25 @@ const EnrollForm: FC<IProps> = () => {
         </Form.Item>
 
         <Form.Item
+          name="realname"
+          label="真实姓名"
+          rules={[
+            {
+              required: true,
+              message: "请输入你的真实姓名!"
+            }
+          ]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item
           name="professionalgrade"
           label="专业年级"
           rules={[
             {
-              type: "email",
-              message: "The input is not valid E-mail!"
-            },
-            {
               required: true,
-              message: "Please input your E-mail!"
+              message: "请输入你的专业年级!"
             }
           ]}
         >

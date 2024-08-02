@@ -9,10 +9,12 @@ import EnrollForm from "./cpns/enrollForm";
 interface IProps {
   children?: ReactNode;
   isLogin: boolean;
+  setLoginOpen?: any;
+  setEnrollOpen?: any;
 }
 
 const Login: FC<IProps> = (props) => {
-  const { isLogin } = props;
+  const { isLogin, setEnrollOpen, setLoginOpen } = props;
 
   return (
     <LoginWrapper>
@@ -21,7 +23,11 @@ const Login: FC<IProps> = (props) => {
         <h2>SWPU BigDataHub</h2>
       </div>
       <div className="form login-form">
-        {isLogin ? <LoginForm /> : <EnrollForm />}
+        {isLogin ? (
+          <LoginForm setLoginOpen={setLoginOpen} />
+        ) : (
+          <EnrollForm setEnrollOpen={setEnrollOpen} />
+        )}
       </div>
     </LoginWrapper>
   );
