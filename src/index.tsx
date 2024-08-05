@@ -15,7 +15,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <HashRouter>
-      <Suspense fallback="没有了">
+      <Suspense fallback="">
         <Provider store={store}>
           <App />
         </Provider>

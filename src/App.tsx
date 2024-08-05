@@ -11,20 +11,29 @@ import AppWrapper, {
   headerStyle,
   layoutStyle
 } from "./style";
-import Loading from "./components/loading";
+import useFlushedData from "./hooks/useFlushedData";
 const { Header, Footer, Content } = Layout;
+import Loading from "@/components/loading";
+import { useAppSelector } from "@/store";
 
 interface IProps {
   children?: ReactNode;
 }
 
 const App: FC<IProps> = () => {
+  const { isShowLoading } = useAppSelector((state) => {
+    return {
+      isShowLoading: state.main.isShowLoading
+    };
+  });
+  useFlushedData();
   return (
     <AppWrapper className="App">
       <Layout style={layoutStyle}>
         <Header style={headerStyle}>{<MyHeader></MyHeader>}</Header>
         <Content style={contentStyle}>{useRoutes(routes)}</Content>
         <Footer style={footerStyle}>Footer</Footer>
+        {isShowLoading ? <Loading /> : ""}
       </Layout>
     </AppWrapper>
   );

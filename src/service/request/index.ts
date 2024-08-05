@@ -14,9 +14,16 @@ class FKRequest {
     this.instance.interceptors.request.use(
       (config) => {
         // loading/token
-        const token = localStorage.getItem(LOGIN_TOKEN);
-        if (token) {
+        const tokenStr = localStorage.getItem(LOGIN_TOKEN);
+        let token;
+        if (tokenStr) {
+          if (tokenStr[0] === '"' && tokenStr[tokenStr.length - 1] === '"') {
+            token = tokenStr.substring(1, tokenStr.length - 1); // 去除首尾的引号
+          } else {
+            token = tokenStr; // 直接使用存储的字符串
+          }
           config.headers.Authorization = `Bearer ${token}`;
+          console.log("config: ", config);
         }
         return config;
       },

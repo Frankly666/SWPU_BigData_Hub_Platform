@@ -7,3 +7,9 @@ export function getUserInfo(data: IUserAccount) {
     data
   });
 }
+
+export function flushData() {
+  return fkRequest.post({
+    url: "/login/flush"
+  });
+}
