@@ -8,3 +8,5 @@ export interface IFormMessage {
   password: string;
   remember: boolean;
 }
+
+export type ITags = "community" | "technology" | "";

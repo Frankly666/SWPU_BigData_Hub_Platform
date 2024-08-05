@@ -10,7 +10,10 @@ import { localCache } from "@/utils/cache";
 import { LOGIN_TOKEN, REMEMBER, USER_ACCOUNT } from "@/global/constant";
 import { changeAvataAction } from "@/store/modules/user";
 import { useAppDispatch } from "@/store";
-import { changeIsLoginAction, changeIsShowLoading } from "@/store/modules/main";
+import {
+  changeIsLoginAction,
+  changeIsShowLoadingAction
+} from "@/store/modules/main";
 
 interface IProps {
   children?: ReactNode;
@@ -58,10 +61,10 @@ const LoginForm: FC<IProps> = (props) => {
       }
       // 关闭登录界面
       setLoginOpen(false);
-      disptch(changeIsShowLoading(true));
+      disptch(changeIsShowLoadingAction(true));
       setTimeout(() => {
         disptch(changeIsLoginAction(true));
-        disptch(changeIsShowLoading(false));
+        disptch(changeIsShowLoadingAction(false));
       }, 300);
     }
   };
