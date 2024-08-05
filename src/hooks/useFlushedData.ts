@@ -13,9 +13,14 @@ function useFlushedData() {
       dispatch(changeAvataAction(res.data.avatar));
     };
     dispatch(changeIsShowLoadingAction(true));
-    fetchData().then(() => {
-      dispatch(changeIsShowLoadingAction(false));
-    });
+    fetchData()
+      .then(() => {
+        dispatch(changeIsShowLoadingAction(false));
+      })
+      .catch((err) => {
+        dispatch(changeIsShowLoadingAction(false));
+        throw new Error(err);
+      });
   }, [dispatch]);
 }
 
