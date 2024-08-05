@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useState } from "react";
 import type { FC, ReactNode } from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Checkbox, Form, Input, Flex, message, Space } from "antd";
+import { Button, Checkbox, Form, Input, Flex, message } from "antd";
 
 import LoginFormWrapper from "./style";
 import { IFormMessage, IUserAccount } from "@/type/users";
@@ -14,9 +14,13 @@ interface IProps {
   setLoginOpen: any;
 }
 
-const LoginForm: FC<IProps> = () => {
+const LoginForm: FC<IProps> = (props) => {
+  const { setLoginOpen } = props;
+  const [username] = useState(localCache.getCache(USER_ACCOUNT)?.name);
+  const [password] = useState(localCache.getCache(USER_ACCOUNT)?.password);
+  const [remember] = useState(localCache.getCache(REMEMBER));
   const [messageApi, contextHolder] = message.useMessage();
-  const [name, setName] = useState(localCache.getCache(USER_ACCOUNT)?.name);
+  const [form] = Form.useForm();
 
   // 这里的value是ant表单组件点击提交后传入的信息
   const onFinish = async (values: IFormMessage) => {
@@ -34,21 +38,27 @@ const LoginForm: FC<IProps> = () => {
         type: "error",
         content: "用户名或密码错误,请重新输入!"
       });
-    }
-
-    console.log("token: ", token);
-
-    // 将token储存到localstorage中
-    localCache.setCache(LOGIN_TOKEN, token);
-    if (values.remember) {
-      localCache.setCache(USER_ACCOUNT, userAccount);
-      localCache.setCache(REMEMBER, values.remember);
     } else {
-      localCache.removeCache(USER_ACCOUNT);
-      localCache.removeCache(REMEMBER);
+      // 将token储存到localstorage中
+      localCache.setCache(LOGIN_TOKEN, token);
+      if (values.remember) {
+        localCache.setCache(USER_ACCOUNT, userAccount);
+        localCache.setCache(REMEMBER, values.remember);
+      } else {
+        localCache.removeCache(USER_ACCOUNT);
+        localCache.removeCache(REMEMBER);
+      }
+      // 关闭登录界面
+      setLoginOpen(false);
+      window.location.reload();
     }
+  };
 
-    // 关闭登录界面
+  const onFinishFailed = () => {
+    messageApi.open({
+      type: "warning",
+      content: "请输入正确格式的账号密码 !"
+    });
   };
 
   return (
@@ -56,15 +66,22 @@ const LoginForm: FC<IProps> = () => {
       {contextHolder}
       <Form
         name="login"
-        initialValues={{ remember: true }}
+        form={form}
+        initialValues={{ remember, username, password }}
         style={{ maxWidth: 360 }}
         onFinish={onFinish}
+        onFinishFailed={onFinishFailed}
       >
         <Form.Item
           name="username"
           rules={[{ required: true, message: "用户名不能为空!" }]}
         >
-          <Input prefix={<UserOutlined />} placeholder="用户名" value={name} />
+          <Input
+            prefix={<UserOutlined />}
+            placeholder="用户名"
+            // defaultValue={name}
+            // value={name}
+          />
         </Form.Item>
         <Form.Item
           name="password"
@@ -83,7 +100,13 @@ const LoginForm: FC<IProps> = () => {
             })
           ]}
         >
-          <Input prefix={<LockOutlined />} type="password" placeholder="密码" />
+          <Input.Password
+            prefix={<LockOutlined />}
+            type="password"
+            placeholder="密码"
+            // defaultValue={password}
+            // value={password}
+          />
         </Form.Item>
         <Form.Item>
           <Flex justify="space-between" align="center">
