@@ -11,12 +11,19 @@ import {
 import HeaderRightWrapper02 from "./style";
 import { useNavigate } from "react-router";
 import { LOGIN_TOKEN, REMEMBER } from "@/global/constant";
+import { useAppSelector } from "@/store";
 
 interface IProps {
   children?: ReactNode;
 }
 
 const HeaderRight: FC<IProps> = () => {
+  const { avatar } = useAppSelector((state) => {
+    return {
+      avatar: state.user.avatar
+    };
+  });
+
   const navigate = useNavigate();
   const items = useMemo(() => {
     const tem: MenuProps["items"] = [
@@ -62,8 +69,9 @@ const HeaderRight: FC<IProps> = () => {
     <HeaderRightWrapper02>
       <Dropdown menu={{ items }} placement="bottom">
         <Avatar
-          style={{ backgroundColor: "#87d068" }}
+          style={{ backgroundColor: "#1677ff" }}
           icon={<UserOutlined />}
+          src={avatar}
         />
       </Dropdown>
     </HeaderRightWrapper02>
