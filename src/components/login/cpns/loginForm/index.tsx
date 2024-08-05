@@ -15,10 +15,11 @@ import { changeIsLoginAction, changeIsShowLoading } from "@/store/modules/main";
 interface IProps {
   children?: ReactNode;
   setLoginOpen: any;
+  setEnrollOpen: any;
 }
 
 const LoginForm: FC<IProps> = (props) => {
-  const { setLoginOpen } = props;
+  const { setLoginOpen, setEnrollOpen } = props;
   const [username] = useState(localCache.getCache(USER_ACCOUNT)?.name);
   const [password] = useState(localCache.getCache(USER_ACCOUNT)?.password);
   const [remember] = useState(localCache.getCache(REMEMBER));
@@ -70,6 +71,11 @@ const LoginForm: FC<IProps> = (props) => {
       type: "warning",
       content: "请输入正确格式的账号密码 !"
     });
+  };
+
+  const toEnrollForm = () => {
+    setLoginOpen(false);
+    setEnrollOpen(true);
   };
 
   return (
@@ -125,7 +131,7 @@ const LoginForm: FC<IProps> = (props) => {
           <Button block type="primary" htmlType="submit">
             Log in
           </Button>
-          or <a href="">Register now!</a>
+          or <a onClick={toEnrollForm}>Register now!</a>
         </Form.Item>
       </Form>
     </LoginFormWrapper>

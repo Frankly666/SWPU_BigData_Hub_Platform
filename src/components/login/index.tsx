@@ -24,7 +24,10 @@ const Login: FC<IProps> = (props) => {
       </div>
       <div className="form login-form">
         {isLogin ? (
-          <LoginForm setLoginOpen={setLoginOpen} />
+          <LoginForm
+            setLoginOpen={setLoginOpen}
+            setEnrollOpen={setEnrollOpen}
+          />
         ) : (
           <EnrollForm setEnrollOpen={setEnrollOpen} />
         )}
