@@ -19,15 +19,16 @@ interface IProps {
 
 const header: FC<IProps> = memo(() => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const toHome = () => {
     navigate("/home");
+    dispatch(changeTagNameAction(""));
   };
 
   const { isLogin, tagName } = useAppSelector((state) => {
     return { isLogin: state.main.isLogin, tagName: state.main.tagName };
   });
 
-  const dispatch = useAppDispatch();
   const handleTagName = (tagName: ITags) => {
     dispatch(changeTagNameAction(tagName));
   };

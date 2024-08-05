@@ -32,6 +32,8 @@ const HeaderWrapper = styled.div<IStyled>`
       }
 
       box-sizing: border-box;
+      border-bottom: 2px solid transparent; /* 初始状态无下划线 */
+      transition: border-bottom 0.6s ease; /* 平滑过渡效果 */
 
       &.${(props) => props.tagName} span {
         color: #1677ff;
