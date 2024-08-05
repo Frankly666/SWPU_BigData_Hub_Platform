@@ -7,9 +7,10 @@ import {
 } from "react-redux";
 
 import mainReducer from "@/store/modules/main";
+import userReducer from "@/store/modules/user";
 
 const store = configureStore({
-  reducer: { main: mainReducer }
+  reducer: { main: mainReducer, user: userReducer }
 });
 
 // 给自己的store定义类型

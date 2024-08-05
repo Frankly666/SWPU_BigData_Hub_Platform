@@ -1,22 +1,28 @@
+import { LOGIN_TOKEN } from "@/global/constant";
 import { createSlice } from "@reduxjs/toolkit";
 
 interface IState {
-  isShowLogin: boolean;
+  isLogin: boolean;
+  isShowLoading: boolean;
 }
 
 const initialState: IState = {
-  isShowLogin: false
+  isLogin: localStorage.getItem(LOGIN_TOKEN) ? true : false,
+  isShowLoading: false
 };
 
 const mainSlice = createSlice({
   name: "main",
   initialState,
   reducers: {
-    changeIsShowLogin(state, { payload }) {
-      state.isShowLogin = payload;
+    changeIsLoginAction(state, { payload }) {
+      state.isLogin = payload;
+    },
+    changeIsShowLoading(state, { payload }) {
+      state.isShowLoading = payload;
     }
   }
 });
 
-export const { changeIsShowLogin } = mainSlice.actions;
+export const { changeIsLoginAction, changeIsShowLoading } = mainSlice.actions;
 export default mainSlice.reducer;

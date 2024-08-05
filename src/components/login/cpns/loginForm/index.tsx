@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useState } from "react";
 import type { FC, ReactNode } from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input, Flex, message } from "antd";
@@ -8,6 +8,9 @@ import { IFormMessage, IUserAccount } from "@/type/users";
 import { getUserInfo } from "@/service/modules/login";
 import { localCache } from "@/utils/cache";
 import { LOGIN_TOKEN, REMEMBER, USER_ACCOUNT } from "@/global/constant";
+import { changeAvataAction } from "@/store/modules/user";
+import { useAppDispatch } from "@/store";
+import { changeIsLoginAction, changeIsShowLoading } from "@/store/modules/main";
 
 interface IProps {
   children?: ReactNode;
@@ -21,6 +24,7 @@ const LoginForm: FC<IProps> = (props) => {
   const [remember] = useState(localCache.getCache(REMEMBER));
   const [messageApi, contextHolder] = message.useMessage();
   const [form] = Form.useForm();
+  const disptch = useAppDispatch();
 
   // 这里的value是ant表单组件点击提交后传入的信息
   const onFinish = async (values: IFormMessage) => {
@@ -32,6 +36,9 @@ const LoginForm: FC<IProps> = (props) => {
     // 进行请求登录
     const res = await getUserInfo(userAccount);
     const token = res.data?.token;
+    const avatar = res.data?.avatar;
+
+    disptch(changeAvataAction(avatar));
 
     if (token === undefined) {
       messageApi.open({
@@ -50,7 +57,11 @@ const LoginForm: FC<IProps> = (props) => {
       }
       // 关闭登录界面
       setLoginOpen(false);
-      window.location.reload();
+      disptch(changeIsShowLoading(true));
+      setTimeout(() => {
+        disptch(changeIsLoginAction(true));
+        disptch(changeIsShowLoading(false));
+      }, 300);
     }
   };
 
@@ -76,12 +87,7 @@ const LoginForm: FC<IProps> = (props) => {
           name="username"
           rules={[{ required: true, message: "用户名不能为空!" }]}
         >
-          <Input
-            prefix={<UserOutlined />}
-            placeholder="用户名"
-            // defaultValue={name}
-            // value={name}
-          />
+          <Input prefix={<UserOutlined />} placeholder="用户名" />
         </Form.Item>
         <Form.Item
           name="password"
@@ -104,8 +110,6 @@ const LoginForm: FC<IProps> = (props) => {
             prefix={<LockOutlined />}
             type="password"
             placeholder="密码"
-            // defaultValue={password}
-            // value={password}
           />
         </Form.Item>
         <Form.Item>

@@ -11,6 +11,7 @@ import AppWrapper, {
   headerStyle,
   layoutStyle
 } from "./style";
+import Loading from "./components/loading";
 const { Header, Footer, Content } = Layout;
 
 interface IProps {

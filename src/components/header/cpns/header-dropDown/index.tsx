@@ -1,11 +1,15 @@
 import React, { memo } from "react";
 import type { FC, ReactNode } from "react";
-import { DownOutlined, SmileOutlined } from "@ant-design/icons";
+import {
+  DownOutlined,
+  SmileOutlined,
+  SnippetsOutlined,
+  PieChartOutlined
+} from "@ant-design/icons";
 import type { MenuProps } from "antd";
 import { Dropdown, Space } from "antd";
 
 import HeaderDropDownWrapper from "./style";
-
 interface IProps {
   children?: ReactNode;
 }
@@ -21,7 +25,8 @@ const items: MenuProps["items"] = [
       >
         BigData后台管理系统
       </a>
-    )
+    ),
+    icon: <PieChartOutlined />
   },
   {
     key: "2",
@@ -33,7 +38,8 @@ const items: MenuProps["items"] = [
       >
         BigData考勤系统
       </a>
-    )
+    ),
+    icon: <SnippetsOutlined />
     // disabled: true
   },
   {

@@ -8,6 +8,8 @@ import HeaderWrapper from "./style";
 import BigdataSvg from "../../assets/svg/bigdataSvg";
 import HeaderRight01 from "./cpns/header-right-01";
 import HeaderDropDown from "./cpns/header-dropDown";
+import { useAppSelector } from "@/store";
+import HeaderRight02 from "./cpns/header-right-02";
 
 interface IProps {
   children?: ReactNode;
@@ -18,6 +20,10 @@ const header: FC<IProps> = memo(() => {
   const toHome = () => {
     navigate("/home");
   };
+
+  const { isLogin } = useAppSelector((state) => {
+    return { isLogin: state.main.isLogin };
+  });
 
   return (
     <HeaderWrapper className="wrapper01">
@@ -32,7 +38,9 @@ const header: FC<IProps> = memo(() => {
       </div>
 
       {/* 左边部分需要根据用户的登陆情况来进行切换 */}
-      <div className="right">{<HeaderRight01 />}</div>
+      <div className="right">
+        {isLogin ? <HeaderRight02 /> : <HeaderRight01 />}
+      </div>
     </HeaderWrapper>
   );
 });

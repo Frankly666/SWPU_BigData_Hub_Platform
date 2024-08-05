@@ -1,6 +1,7 @@
 import axios from "axios";
 import type { AxiosInstance } from "axios";
 import type { FKRequestConfig } from "./type";
+import { LOGIN_TOKEN } from "@/global/constant";
 
 class FKRequest {
   instance: AxiosInstance;
@@ -13,6 +14,10 @@ class FKRequest {
     this.instance.interceptors.request.use(
       (config) => {
         // loading/token
+        const token = localStorage.getItem(LOGIN_TOKEN);
+        if (token) {
+          config.headers.Authorization = `Bearer ${token}`;
+        }
         return config;
       },
       (err) => {
