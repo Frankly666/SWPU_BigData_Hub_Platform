@@ -18,8 +18,8 @@ function useFlushedData() {
         dispatch(changeIsShowLoadingAction(false));
       })
       .catch((err) => {
+        console.log("err: ", err);
         dispatch(changeIsShowLoadingAction(false));
-        throw new Error(err);
       });
   }, [dispatch]);
 }
