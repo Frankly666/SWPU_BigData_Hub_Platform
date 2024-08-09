@@ -32,12 +32,20 @@ const HeaderWrapper = styled.div<IStyled>`
       }
 
       box-sizing: border-box;
-      border-bottom: 2px solid transparent; /* 初始状态无下划线 */
+      border-bottom: 1px solid transparent; /* 初始状态无下划线 */
       transition: border-bottom 0.6s ease; /* 平滑过渡效果 */
 
       &.${(props) => props.tagName} span {
         color: #1677ff;
-        border-bottom: #1677ff 2px solid;
+        border-bottom: #1677ff 1px solid;
+      }
+
+      &.${(props) => props.tagName} {
+        background: rgba(0, 0, 0, 0.06);
+      }
+
+      &:hover span {
+        border-bottom: #1677ff 1px solid;
       }
     }
   }

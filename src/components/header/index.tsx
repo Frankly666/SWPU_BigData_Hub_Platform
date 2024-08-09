@@ -30,6 +30,7 @@ const header: FC<IProps> = memo(() => {
   });
 
   const handleTagName = (tagName: ITags) => {
+    navigate(`/${tagName}`);
     dispatch(changeTagNameAction(tagName));
   };
 

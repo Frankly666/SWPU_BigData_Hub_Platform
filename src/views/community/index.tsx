@@ -1,6 +1,7 @@
 import React, { memo, useEffect } from "react";
 import type { FC, ReactNode } from "react";
 
+import CommunityWrapper from "./style";
 import { useAppDispatch } from "@/store";
 import { changeTagNameAction } from "@/store/modules/main";
 
@@ -8,18 +9,14 @@ interface IProps {
   children?: ReactNode;
 }
 
-const Home: FC<IProps> = () => {
+const Community: FC<IProps> = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(changeTagNameAction(""));
+    dispatch(changeTagNameAction("community"));
   }, []);
 
-  return (
-    <div>
-      <h2>home</h2>
-    </div>
-  );
+  return <CommunityWrapper>Community</CommunityWrapper>;
 };
 
-export default memo(Home);
+export default memo(Community);

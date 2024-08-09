@@ -1,6 +1,7 @@
 import React, { memo, useEffect } from "react";
 import type { FC, ReactNode } from "react";
 
+import TechnologyWrapper from "./style";
 import { useAppDispatch } from "@/store";
 import { changeTagNameAction } from "@/store/modules/main";
 
@@ -8,18 +9,13 @@ interface IProps {
   children?: ReactNode;
 }
 
-const Home: FC<IProps> = () => {
+const Technology: FC<IProps> = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(changeTagNameAction(""));
-  }, []);
-
-  return (
-    <div>
-      <h2>home</h2>
-    </div>
-  );
+    dispatch(changeTagNameAction("technology"));
+  });
+  return <TechnologyWrapper>Technology</TechnologyWrapper>;
 };
 
-export default memo(Home);
+export default memo(Technology);
