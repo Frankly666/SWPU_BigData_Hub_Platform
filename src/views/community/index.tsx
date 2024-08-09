@@ -1,7 +1,6 @@
 import React, { memo, useLayoutEffect, useState, useEffect } from "react";
 import type { FC, ReactNode } from "react";
-import { Avatar, Divider, List, Skeleton, message } from "antd";
-import InfiniteScroll from "react-infinite-scroll-component";
+import { Avatar, List, message } from "antd";
 
 import CommunityWrapper from "./style";
 import { useAppDispatch, useAppSelector } from "@/store";

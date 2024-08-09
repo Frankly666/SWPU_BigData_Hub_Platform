@@ -3,7 +3,7 @@ import type { FC, ReactNode } from "react";
 import { useLocation, useRoutes } from "react-router";
 import { routes } from "./router";
 import { Layout, Skeleton } from "antd";
-const { Header, Footer, Content, Sider } = Layout;
+const { Header, Content, Sider } = Layout;
 
 import MyHeader from "./components/header";
 import AppWrapper, {
