@@ -8,7 +8,6 @@ import "./assets/style/index.less";
 
 import { HashRouter } from "react-router-dom";
 import store from "./store";
-import Loading from "./components/loading";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -16,11 +15,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <HashRouter>
-      <Suspense fallback={<Loading />}>
-        <Provider store={store}>
-          <App />
-        </Provider>
-      </Suspense>
+      <Provider store={store}>
+        <App />
+      </Provider>
     </HashRouter>
   </React.StrictMode>
 );

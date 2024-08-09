@@ -2,7 +2,7 @@ import type { ITags } from "@/type/users";
 import styled from "styled-components";
 
 interface IStyled {
-  tagName: ITags;
+  $tagName: ITags;
 }
 
 const HeaderWrapper = styled.div<IStyled>`
@@ -35,12 +35,12 @@ const HeaderWrapper = styled.div<IStyled>`
       border-bottom: 1px solid transparent; /* 初始状态无下划线 */
       transition: border-bottom 0.6s ease; /* 平滑过渡效果 */
 
-      &.${(props) => props.tagName} span {
+      &.${(props) => props.$tagName} span {
         color: #1677ff;
         border-bottom: #1677ff 1px solid;
       }
 
-      &.${(props) => props.tagName} {
+      &.${(props) => props.$tagName} {
         background: rgba(0, 0, 0, 0.06);
       }
 

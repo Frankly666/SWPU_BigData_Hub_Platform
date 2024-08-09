@@ -2,7 +2,7 @@ import { flushData } from "@/service/modules/login";
 import { useEffect } from "react";
 import { useAppDispatch } from "@/store";
 import { changeAvataAction } from "@/store/modules/user";
-import { changeIsShowLoadingAction } from "@/store/modules/main";
+// import { changeIsShowLoadingAction } from "@/store/modules/main";
 
 function useFlushedData() {
   const dispatch = useAppDispatch();
@@ -12,14 +12,14 @@ function useFlushedData() {
       const res = await flushData();
       dispatch(changeAvataAction(res.data.avatar));
     };
-    dispatch(changeIsShowLoadingAction(true));
+    // dispatch(changeIsShowLoadingAction(true));
     fetchData()
       .then(() => {
-        dispatch(changeIsShowLoadingAction(false));
+        // dispatch(changeIsShowLoadingAction(false));
       })
       .catch((err) => {
         console.log("err: ", err);
-        dispatch(changeIsShowLoadingAction(false));
+        // dispatch(changeIsShowLoadingAction(false));
       });
   }, [dispatch]);
 }

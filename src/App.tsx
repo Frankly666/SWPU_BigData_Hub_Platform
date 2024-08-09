@@ -1,18 +1,20 @@
-import React, { memo } from "react";
+import React, { memo, Suspense } from "react";
 import type { FC, ReactNode } from "react";
-import { useRoutes } from "react-router";
+import { useLocation, useRoutes } from "react-router";
 import { routes } from "./router";
+import { Layout, Skeleton } from "antd";
+const { Header, Footer, Content, Sider } = Layout;
 
 import MyHeader from "./components/header";
-import { Layout } from "antd";
 import AppWrapper, {
+  contentLayoutStyle,
   contentStyle,
-  footerStyle,
   headerStyle,
-  layoutStyle
+  layoutStyle,
+  siderLeftStyle,
+  siderRightStyle
 } from "./style";
 import useFlushedData from "./hooks/useFlushedData";
-const { Header, Footer, Content } = Layout;
 import Loading from "@/components/loading";
 import { useAppSelector } from "@/store";
 
@@ -27,12 +29,31 @@ const App: FC<IProps> = () => {
     };
   });
   useFlushedData();
+  const location = useLocation();
   return (
     <AppWrapper className="App">
       <Layout style={layoutStyle}>
         <Header style={headerStyle}>{<MyHeader></MyHeader>}</Header>
-        <Content style={contentStyle}>{useRoutes(routes)}</Content>
-        <Footer style={footerStyle}>Footer</Footer>
+        {location.pathname === "/home" ? (
+          <Layout style={contentLayoutStyle}>
+            <Suspense fallback={<Skeleton />}>
+              <Content style={contentStyle}>{useRoutes(routes)}</Content>
+            </Suspense>
+          </Layout>
+        ) : (
+          <Layout style={contentLayoutStyle}>
+            <Sider width="10%" style={siderLeftStyle}>
+              SiderLeft
+            </Sider>
+            <Suspense fallback={<Skeleton />}>
+              <Content style={contentStyle}>{useRoutes(routes)}</Content>
+            </Suspense>
+            <Sider width="20%" style={siderRightStyle}>
+              SiderRight
+            </Sider>
+          </Layout>
+        )}
+        {/* 这个加载中的蒙版只有在登录时才会展示 */}
         {isShowLoading ? <Loading /> : ""}
       </Layout>
     </AppWrapper>
