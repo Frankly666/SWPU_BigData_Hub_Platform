@@ -46,8 +46,7 @@ export const contentStyle: React.CSSProperties = {
   textAlign: "center",
   color: "black",
   backgroundColor: "#fff",
-  marginTop: "20px",
-  marginLeft: "210px"
+  marginTop: "20px"
 };
 
 export const footerStyle: React.CSSProperties = {
@@ -58,7 +57,8 @@ export const footerStyle: React.CSSProperties = {
 
 export const layoutStyle: React.CSSProperties = {
   overflow: "auto",
-  width: `100%`
+  width: `100%`,
+  minHeight: "1004px"
 };
 
 export const contentLayoutStyle: React.CSSProperties = {

@@ -30,9 +30,13 @@ const App: FC<IProps> = () => {
       isShowHeader: state.main.isShowHeader
     };
   });
+
+  // 自定义hook的使用
   useFlushedData(); // 刷新时重新获取数据
   useListenScroll(); // 监听页面滑动, 给header做动画
+
   const location = useLocation();
+
   return (
     <AppWrapper className="App">
       <Layout style={layoutStyle}>
@@ -64,7 +68,9 @@ const App: FC<IProps> = () => {
               SiderLeft
             </Sider>
             <Suspense fallback={<Skeleton />}>
-              <Content style={contentStyle}>{useRoutes(routes)}</Content>
+              <Content style={{ ...contentStyle, marginLeft: "210px" }}>
+                {useRoutes(routes)}
+              </Content>
             </Suspense>
             <Sider width="20%" style={siderRightStyle}>
               SiderRight

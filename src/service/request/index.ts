@@ -23,7 +23,6 @@ class FKRequest {
             token = tokenStr; // 直接使用存储的字符串
           }
           config.headers.Authorization = `Bearer ${token}`;
-          console.log("config: ", config);
         }
         return config;
       },

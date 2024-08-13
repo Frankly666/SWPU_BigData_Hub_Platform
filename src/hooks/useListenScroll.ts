@@ -7,7 +7,7 @@ export function useListenScroll() {
   const dispatch = useAppDispatch();
   const handleScroll = _.throttle(() => {
     const top = document.documentElement.scrollTop;
-    dispatch(changeIsShowHeaderAction(top < 200));
+    dispatch(changeIsShowHeaderAction(top < 300));
   }, 100); // 在100毫秒内最多执行一次
 
   useEffect(() => {
