@@ -6,12 +6,14 @@ interface IState {
   isLogin: boolean;
   isShowLoading: boolean;
   tagName: ITags;
+  isShowHeader: boolean;
 }
 
 const initialState: IState = {
   isLogin: localStorage.getItem(LOGIN_TOKEN) ? true : false,
   isShowLoading: false,
-  tagName: ""
+  tagName: "",
+  isShowHeader: true
 };
 
 const mainSlice = createSlice({
@@ -26,6 +28,9 @@ const mainSlice = createSlice({
     },
     changeTagNameAction(state, { payload }) {
       state.tagName = payload;
+    },
+    changeIsShowHeaderAction(state, { payload }) {
+      state.isShowHeader = payload;
     }
   }
 });
@@ -33,6 +38,7 @@ const mainSlice = createSlice({
 export const {
   changeIsLoginAction,
   changeIsShowLoadingAction,
-  changeTagNameAction
+  changeTagNameAction,
+  changeIsShowHeaderAction
 } = mainSlice.actions;
 export default mainSlice.reducer;

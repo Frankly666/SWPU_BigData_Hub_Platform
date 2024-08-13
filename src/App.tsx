@@ -17,23 +17,33 @@ import AppWrapper, {
 import useFlushedData from "./hooks/useFlushedData";
 import Loading from "@/components/loading";
 import { useAppSelector } from "@/store";
+import { useListenScroll } from "./hooks/useListenScroll";
 
 interface IProps {
   children?: ReactNode;
 }
 
 const App: FC<IProps> = () => {
-  const { isShowLoading } = useAppSelector((state) => {
+  const { isShowLoading, isShowHeader } = useAppSelector((state) => {
     return {
-      isShowLoading: state.main.isShowLoading
+      isShowLoading: state.main.isShowLoading,
+      isShowHeader: state.main.isShowHeader
     };
   });
-  useFlushedData();
+  useFlushedData(); // 刷新时重新获取数据
+  useListenScroll(); // 监听页面滑动, 给header做动画
   const location = useLocation();
   return (
     <AppWrapper className="App">
       <Layout style={layoutStyle}>
-        <Header style={headerStyle}>{<MyHeader></MyHeader>}</Header>
+        <Header
+          style={{
+            ...headerStyle,
+            transform: isShowHeader ? "translateY(0)" : `translateY(-${64}px)` // 向上移动64px
+          }}
+        >
+          {<MyHeader></MyHeader>}
+        </Header>
         {location.pathname === "/home" ? (
           <Layout style={contentLayoutStyle}>
             <Suspense fallback={<Skeleton />}>
@@ -42,7 +52,15 @@ const App: FC<IProps> = () => {
           </Layout>
         ) : (
           <Layout style={contentLayoutStyle}>
-            <Sider width="10%" style={siderLeftStyle}>
+            <Sider
+              width="10%"
+              style={{
+                ...siderLeftStyle,
+                transform: isShowHeader
+                  ? "translateY(0)"
+                  : `translateY(-${64}px)`
+              }}
+            >
               SiderLeft
             </Sider>
             <Suspense fallback={<Skeleton />}>

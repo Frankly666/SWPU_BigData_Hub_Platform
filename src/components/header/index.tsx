@@ -26,7 +26,10 @@ const header: FC<IProps> = memo(() => {
   };
 
   const { isLogin, tagName } = useAppSelector((state) => {
-    return { isLogin: state.main.isLogin, tagName: state.main.tagName };
+    return {
+      isLogin: state.main.isLogin,
+      tagName: state.main.tagName
+    };
   });
 
   const handleTagName = (tagName: ITags) => {

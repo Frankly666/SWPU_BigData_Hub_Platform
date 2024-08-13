@@ -8,6 +8,7 @@ interface IStyled {
 const HeaderWrapper = styled.div<IStyled>`
   display: flex;
   justify-content: space-between;
+  height: 0;
 
   .left {
     display: flex;
