@@ -1,7 +1,11 @@
-import React, { memo, useLayoutEffect, useState, useEffect } from "react";
+import React, { memo, useLayoutEffect, useMemo, useState } from "react";
 import type { FC, ReactNode } from "react";
-import { message, Tabs } from "antd";
-import { ContainerOutlined, SmileOutlined } from "@ant-design/icons";
+import { message, Tabs, Modal, Tooltip } from "antd";
+import {
+  ContainerOutlined,
+  SmileOutlined,
+  FormOutlined
+} from "@ant-design/icons";
 
 import CommunityWrapper from "./style";
 import { useAppDispatch, useAppSelector } from "@/store";
@@ -22,20 +26,24 @@ const Community: FC<IProps> = () => {
       isLogin: state.main.isLogin
     };
   });
-  const [items] = useState([
-    {
-      key: "1",
-      label: "动态",
-      children: <Moment />,
-      icon: <SmileOutlined />
-    },
-    {
-      key: "2",
-      label: "文章",
-      children: <Essay />,
-      icon: <ContainerOutlined />
-    }
-  ]);
+  const items = useMemo(
+    () => [
+      {
+        key: "1",
+        label: "动态",
+        children: <Moment />,
+        icon: <SmileOutlined />
+      },
+      {
+        key: "2",
+        label: "文章",
+        children: <Essay />,
+        icon: <ContainerOutlined />
+      }
+    ],
+    []
+  );
+  const [isShowPublish, setIsShowPublish] = useState(false);
 
   useLayoutEffect(() => {
     dispatch(changeTagNameAction("community"));
@@ -49,9 +57,40 @@ const Community: FC<IProps> = () => {
     }
   }, []);
 
+  function handlePublish() {
+    setIsShowPublish(true);
+  }
+
   return (
     <CommunityWrapper>
-      <Tabs defaultActiveKey="1" items={items} />
+      <Tabs
+        defaultActiveKey="1"
+        items={items}
+        tabBarExtraContent={
+          <Tooltip
+            title="Share your idea or experience"
+            color={"blue"}
+            key={"blue"}
+          >
+            <FormOutlined
+              style={{ fontSize: "17px" }}
+              onClick={handlePublish}
+            />
+          </Tooltip>
+        }
+      />
+      <Modal
+        title="发表动态或文章"
+        style={{ top: 20 }}
+        open={isShowPublish}
+        onOk={() => setIsShowPublish(false)}
+        onCancel={() => setIsShowPublish(false)}
+        maskClosable={false}
+      >
+        <p>some contents...</p>
+        <p>some contents...</p>
+        <p>some contents...</p>
+      </Modal>
     </CommunityWrapper>
   );
 };

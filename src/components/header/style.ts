@@ -15,6 +15,7 @@ const HeaderWrapper = styled.div<IStyled>`
     justify-content: space-between;
     align-items: center;
     width: 550px;
+
     .icon {
       display: flex;
       align-items: center;
@@ -27,26 +28,25 @@ const HeaderWrapper = styled.div<IStyled>`
     }
 
     .ant-btn {
+      box-sizing: border-box;
+
       &:hover {
         color: #1677ff;
         background: rgba(0, 0, 0, 0.06);
       }
 
-      box-sizing: border-box;
-      border-bottom: 1px solid transparent; /* 初始状态无下划线 */
-      transition: border-bottom 0.6s ease; /* 平滑过渡效果 */
-
       &.${(props) => props.$tagName} span {
+        font-weight: bold;
         color: #1677ff;
-        border-bottom: #1677ff 1px solid;
       }
 
       &.${(props) => props.$tagName} {
+        font-weight: bold;
         background: rgba(0, 0, 0, 0.06);
       }
 
       &:hover span {
-        border-bottom: #1677ff 1px solid;
+        font-weight: bold;
       }
     }
   }
