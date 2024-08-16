@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useLayoutEffect, useState } from "react";
 import type { FC, ReactNode } from "react";
 import { Space } from "antd";
 
@@ -8,15 +8,39 @@ interface IProps {
   children?: ReactNode;
   icon: React.FC;
   text: string;
+  clickFn?: (isActive: boolean) => Promise<boolean>;
+  checkInitIsActive?: () => boolean;
 }
 
 const IconText: FC<IProps> = (props) => {
-  const { icon, text } = props;
+  const { icon, text, clickFn, checkInitIsActive } = props;
+  const [isActive, setIsActive] = useState(false);
+  const [textVar, setTextVar] = useState(text);
+
+  useLayoutEffect(() => {
+    if (checkInitIsActive) {
+      setIsActive(checkInitIsActive());
+    }
+  }, []);
+
   return (
-    <IconTextWrapper>
-      <Space>
+    <IconTextWrapper $isActive={isActive}>
+      <Space
+        onClick={() => {
+          if (clickFn) {
+            clickFn(isActive).then((res) => {
+              if (isActive) {
+                setTextVar((last) => (parseInt(last) - 1).toString());
+              } else {
+                setTextVar((last) => (parseInt(last) + 1).toString());
+              }
+              setIsActive(res);
+            });
+          }
+        }}
+      >
         {React.createElement(icon)}
-        {text}
+        {textVar}
       </Space>
     </IconTextWrapper>
   );

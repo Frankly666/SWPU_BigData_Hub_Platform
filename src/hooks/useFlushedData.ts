@@ -1,7 +1,7 @@
 import { flushData } from "@/service/modules/login";
 import { useEffect } from "react";
 import { useAppDispatch } from "@/store";
-import { changeAvataAction } from "@/store/modules/user";
+import { changeAvataAction, changeUserIdAction } from "@/store/modules/user";
 // import { changeIsShowLoadingAction } from "@/store/modules/main";
 
 function useFlushedData() {
@@ -11,6 +11,7 @@ function useFlushedData() {
     const fetchData = async () => {
       const res = await flushData();
       dispatch(changeAvataAction(res.data.avatar));
+      dispatch(changeUserIdAction(res.data.user.userId));
     };
     // dispatch(changeIsShowLoadingAction(true));
     fetchData()
