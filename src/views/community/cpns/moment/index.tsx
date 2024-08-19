@@ -1,7 +1,13 @@
 import React, { memo, useState, useEffect } from "react";
 import type { FC, ReactNode } from "react";
 import { Avatar, List } from "antd";
-import { LikeOutlined, MessageOutlined, StarOutlined } from "@ant-design/icons";
+import {
+  LikeOutlined,
+  MessageOutlined,
+  StarOutlined,
+  LikeFilled,
+  StarFilled
+} from "@ant-design/icons";
 import IconText from "@/components/IconText";
 import MomentWrapper from "./style";
 import { IMoment } from "@/type/moment";
@@ -29,6 +35,7 @@ const Moment: FC<IProps> = () => {
     loadMomentData();
   }, []);
 
+  // 加载"动态"列表信息
   async function loadMomentData() {
     if (loading) return;
     setLoading(true);
@@ -87,6 +94,7 @@ const Moment: FC<IProps> = () => {
             actions={[
               <IconText
                 icon={StarOutlined}
+                activeIcon={StarFilled}
                 text={item.favor.favorCount?.toString()}
                 key="list-vertical-star-o"
                 clickFn={(isActive) => {
@@ -103,6 +111,7 @@ const Moment: FC<IProps> = () => {
               />,
               <IconText
                 icon={LikeOutlined}
+                activeIcon={LikeFilled}
                 text={item.like.likeCount?.toString()}
                 key="list-vertical-like-o"
                 clickFn={(isActive) => {

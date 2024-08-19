@@ -7,13 +7,14 @@ import IconTextWrapper from "./style";
 interface IProps {
   children?: ReactNode;
   icon: React.FC;
+  activeIcon?: React.FC;
   text: string;
   clickFn?: (isActive: boolean) => Promise<boolean>;
   checkInitIsActive?: () => boolean;
 }
 
 const IconText: FC<IProps> = (props) => {
-  const { icon, text, clickFn, checkInitIsActive } = props;
+  const { icon, text, clickFn, checkInitIsActive, activeIcon } = props;
   const [isActive, setIsActive] = useState(false);
   const [textVar, setTextVar] = useState(text);
 
@@ -39,7 +40,9 @@ const IconText: FC<IProps> = (props) => {
           }
         }}
       >
-        {React.createElement(icon)}
+        {activeIcon && isActive
+          ? React.createElement(activeIcon)
+          : React.createElement(icon)}
         {textVar}
       </Space>
     </IconTextWrapper>

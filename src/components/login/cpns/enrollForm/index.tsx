@@ -1,18 +1,7 @@
 import React, { memo, useState } from "react";
 import type { FC, ReactNode } from "react";
-import type { CascaderProps } from "antd";
-import {
-  AutoComplete,
-  Button,
-  Cascader,
-  Checkbox,
-  Col,
-  Form,
-  Input,
-  InputNumber,
-  Row,
-  Select
-} from "antd";
+import { Button, Checkbox, Form, Input, Select, Upload } from "antd";
+import { UploadOutlined } from "@ant-design/icons";
 
 import EnrollFormWrapper from "./style";
 
@@ -22,7 +11,6 @@ interface IProps {
 }
 
 const { Option } = Select;
-
 const formItemLayout = {
   labelCol: {
     xs: { span: 24 },
@@ -33,7 +21,6 @@ const formItemLayout = {
     sm: { span: 16 }
   }
 };
-
 const tailFormItemLayout = {
   wrapperCol: {
     xs: {
@@ -49,45 +36,26 @@ const tailFormItemLayout = {
 
 const EnrollForm: FC<IProps> = () => {
   const [form] = Form.useForm();
+  const [upload, setUpload] = useState(true);
 
   const onFinish = (values: any) => {
     console.log("Received values of form: ", values);
   };
 
-  const prefixSelector = (
-    <Form.Item name="prefix" noStyle>
-      <Select style={{ width: 70 }}>
-        <Option value="86">+86</Option>
-        <Option value="87">+87</Option>
-      </Select>
-    </Form.Item>
-  );
-
-  const suffixSelector = (
-    <Form.Item name="suffix" noStyle>
-      <Select style={{ width: 70 }}>
-        <Option value="USD">$</Option>
-        <Option value="CNY">¥</Option>
-      </Select>
-    </Form.Item>
-  );
-
-  const [autoCompleteResult, setAutoCompleteResult] = useState<string[]>([]);
-
-  const onWebsiteChange = (value: string) => {
-    if (!value) {
-      setAutoCompleteResult([]);
-    } else {
-      setAutoCompleteResult(
-        [".com", ".org", ".net"].map((domain) => `${value}${domain}`)
-      );
+  // 头像上传之前的check工作
+  const onFieldsChange = (changedFields: any, allFields: any) => {
+    let temp = false;
+    for (let i = 0; i <= 5; i++) {
+      if (!(allFields[i].touched && !allFields[i].errors.length)) {
+        temp = true;
+        break;
+      }
     }
-  };
+    // if (temp) {
+    // }
 
-  const websiteOptions = autoCompleteResult.map((website) => ({
-    label: website,
-    value: website
-  }));
+    setUpload(temp);
+  };
 
   return (
     <EnrollFormWrapper>
@@ -96,12 +64,9 @@ const EnrollForm: FC<IProps> = () => {
         form={form}
         name="register"
         onFinish={onFinish}
-        initialValues={{
-          residence: ["zhejiang", "hangzhou", "xihu"],
-          prefix: "86"
-        }}
         style={{ maxWidth: 600 }}
         scrollToFirstError
+        onFieldsChange={onFieldsChange}
       >
         <Form.Item
           name="username"
@@ -233,10 +198,22 @@ const EnrollForm: FC<IProps> = () => {
         <Form.Item
           name="intro"
           label="爱好"
-          tooltip="简单介绍一下自己, 不写也没事"
+          tooltip="简单介绍一下自己~"
           rules={[{ required: false, message: "Please input Intro" }]}
         >
           <Input.TextArea showCount maxLength={100} />
+        </Form.Item>
+        <Form.Item
+          name="avatar"
+          label="头像上传"
+          tooltip="上传后请勿修改以上信息, 若未上传则使用默认头像"
+          rules={[{ required: false, message: "Please input Intro" }]}
+        >
+          <Upload listType="picture" disabled={upload}>
+            <Button type="dashed" icon={<UploadOutlined />} disabled={upload}>
+              Upload
+            </Button>
+          </Upload>
         </Form.Item>
 
         <Form.Item
@@ -256,6 +233,7 @@ const EnrollForm: FC<IProps> = () => {
             I have read the <a href="">agreement</a>
           </Checkbox>
         </Form.Item>
+
         <Form.Item {...tailFormItemLayout}>
           <Button type="primary" htmlType="submit">
             Register

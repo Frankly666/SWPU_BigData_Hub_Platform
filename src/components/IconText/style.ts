@@ -22,7 +22,12 @@ const IconTextWrapper = styled.div<IStyld>`
     color: #1677ff;
   }`
       : ``;
-  }}
+  }};
+
+  :where(.ant-list-item-action) {
+    position: relative;
+    bottom: 4px;
+  }
 `;
 
 export default IconTextWrapper;
