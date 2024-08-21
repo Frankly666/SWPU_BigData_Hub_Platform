@@ -4,6 +4,7 @@ import { Button, Checkbox, Form, Input, Select, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 
 import EnrollFormWrapper from "./style";
+import { BASE_URL } from "@/service/config";
 
 interface IProps {
   children?: ReactNode;
@@ -37,6 +38,7 @@ const tailFormItemLayout = {
 const EnrollForm: FC<IProps> = () => {
   const [form] = Form.useForm();
   const [upload, setUpload] = useState(true);
+  const [realName, setRealName] = useState<string>();
 
   const onFinish = (values: any) => {
     console.log("Received values of form: ", values);
@@ -51,8 +53,6 @@ const EnrollForm: FC<IProps> = () => {
         break;
       }
     }
-    // if (temp) {
-    // }
 
     setUpload(temp);
   };
@@ -141,7 +141,11 @@ const EnrollForm: FC<IProps> = () => {
             }
           ]}
         >
-          <Input />
+          <Input
+            onChange={(e) => {
+              setRealName(e.currentTarget.defaultValue);
+            }}
+          />
         </Form.Item>
 
         <Form.Item
@@ -203,13 +207,18 @@ const EnrollForm: FC<IProps> = () => {
         >
           <Input.TextArea showCount maxLength={100} />
         </Form.Item>
+
         <Form.Item
           name="avatar"
           label="头像上传"
-          tooltip="上传后请勿修改以上信息, 若未上传则使用默认头像"
+          tooltip="请完整填写完必填信息后上传, 且上传后请勿修改以上信息, 若未上传则使用默认头像"
           rules={[{ required: false, message: "Please input Intro" }]}
         >
-          <Upload listType="picture" disabled={upload}>
+          <Upload
+            listType="picture"
+            disabled={upload}
+            action={BASE_URL + `/file/avatar/init/` + realName}
+          >
             <Button type="dashed" icon={<UploadOutlined />} disabled={upload}>
               Upload
             </Button>
