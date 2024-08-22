@@ -10,3 +10,14 @@ export interface IFormMessage {
 }
 
 export type ITags = "community" | "technology" | "";
+
+export interface IUserInfo {
+  name: string;
+  password: string;
+  realName: string;
+  gender: "male" | "female";
+  phone: string | null;
+  email: string | null;
+  hobby: string | null;
+  avatarId: number | null;
+}

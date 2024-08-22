@@ -5,6 +5,9 @@ import { UploadOutlined } from "@ant-design/icons";
 
 import EnrollFormWrapper from "./style";
 import { BASE_URL } from "@/service/config";
+import { deleteTemAvatar, initAvatar } from "@/service/modules/avatar";
+import { enroll } from "@/service/modules/enroll";
+import { IUserInfo } from "@/type/users";
 
 interface IProps {
   children?: ReactNode;
@@ -40,8 +43,39 @@ const EnrollForm: FC<IProps> = () => {
   const [upload, setUpload] = useState(true);
   const [realName, setRealName] = useState<string>();
 
-  const onFinish = (values: any) => {
-    console.log("Received values of form: ", values);
+  const onFinish = async (values: any) => {
+    // 删除暂存的照片, 因为无用
+    await deleteTemAvatar(realName as string);
+
+    const file = values.avatar?.file?.originFileObj;
+    const formdata = new FormData();
+    formdata.append("avatar", file);
+
+    const userInfo: IUserInfo = {
+      name: values.username,
+      password: values.password,
+      realName: values.realname,
+      gender: values.gender,
+      phone: values.phone || null,
+      email: values.email || null,
+      hobby: values.intro || null,
+      avatarId: null
+    };
+
+    // if (!file) {
+    //   const defaultAvatar = userInfo.gender === "male" ? 1 : 0;
+    //   userInfo.avatarId = defaultAvatar;
+    // }
+
+    const res1 = await enroll(userInfo);
+    console.log("res1: ", res1);
+    const userId = res1?.data?.insertId;
+
+    // 用户创建成功后记得添加头像
+    if (file) await initAvatar(formdata, userId);
+    // else {
+    //   console.log("hhhh");
+    // }
   };
 
   // 头像上传之前的check工作
