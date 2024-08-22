@@ -62,10 +62,10 @@ const EnrollForm: FC<IProps> = () => {
       avatarId: null
     };
 
-    // if (!file) {
-    //   const defaultAvatar = userInfo.gender === "male" ? 1 : 0;
-    //   userInfo.avatarId = defaultAvatar;
-    // }
+    if (!file) {
+      const defaultAvatar = userInfo.gender === "male" ? 1 : 0;
+      userInfo.avatarId = defaultAvatar;
+    }
 
     const res1 = await enroll(userInfo);
     console.log("res1: ", res1);
@@ -73,9 +73,6 @@ const EnrollForm: FC<IProps> = () => {
 
     // 用户创建成功后记得添加头像
     if (file) await initAvatar(formdata, userId);
-    // else {
-    //   console.log("hhhh");
-    // }
   };
 
   // 头像上传之前的check工作
