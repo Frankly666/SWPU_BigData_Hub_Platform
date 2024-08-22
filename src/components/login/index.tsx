@@ -29,7 +29,10 @@ const Login: FC<IProps> = (props) => {
             setEnrollOpen={setEnrollOpen}
           />
         ) : (
-          <EnrollForm setEnrollOpen={setEnrollOpen} />
+          <EnrollForm
+            setEnrollOpen={setEnrollOpen}
+            setLoginOpen={setLoginOpen}
+          />
         )}
       </div>
     </LoginWrapper>

@@ -1,6 +1,6 @@
 import React, { memo, useState } from "react";
 import type { FC, ReactNode } from "react";
-import { Button, Checkbox, Form, Input, Select, Upload } from "antd";
+import { Button, Checkbox, Form, Input, Select, Upload, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 
 import EnrollFormWrapper from "./style";
@@ -12,6 +12,7 @@ import { IUserInfo } from "@/type/users";
 interface IProps {
   children?: ReactNode;
   setEnrollOpen: any;
+  setLoginOpen: any;
 }
 
 const { Option } = Select;
@@ -38,10 +39,11 @@ const tailFormItemLayout = {
   }
 };
 
-const EnrollForm: FC<IProps> = () => {
+const EnrollForm: FC<IProps> = ({ setEnrollOpen, setLoginOpen }) => {
   const [form] = Form.useForm();
   const [upload, setUpload] = useState(true);
   const [realName, setRealName] = useState<string>();
+  const [messageApi, contextHolder] = message.useMessage();
 
   const onFinish = async (values: any) => {
     // 删除暂存的照片, 因为无用
@@ -73,6 +75,15 @@ const EnrollForm: FC<IProps> = () => {
 
     // 用户创建成功后记得添加头像
     if (file) await initAvatar(formdata, userId);
+
+    setEnrollOpen(false);
+    messageApi.open({
+      type: "success",
+      content: "注册成功, 请登录!"
+    });
+    setTimeout(() => {
+      setLoginOpen(true);
+    }, 500);
   };
 
   // 头像上传之前的check工作
@@ -90,6 +101,7 @@ const EnrollForm: FC<IProps> = () => {
 
   return (
     <EnrollFormWrapper>
+      {contextHolder}
       <Form
         {...formItemLayout}
         form={form}
