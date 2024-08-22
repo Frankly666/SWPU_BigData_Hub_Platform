@@ -70,20 +70,27 @@ const EnrollForm: FC<IProps> = ({ setEnrollOpen, setLoginOpen }) => {
     }
 
     const res1 = await enroll(userInfo);
-    console.log("res1: ", res1);
-    const userId = res1?.data?.insertId;
+    if (res1.code < 0) {
+      messageApi.open({
+        type: "warning",
+        content: res1.message
+      });
+    } else {
+      console.log("res1: ", res1);
+      const userId = res1?.data?.insertId;
 
-    // 用户创建成功后记得添加头像
-    if (file) await initAvatar(formdata, userId);
+      // 用户创建成功后记得添加头像
+      if (file) await initAvatar(formdata, userId);
 
-    setEnrollOpen(false);
-    messageApi.open({
-      type: "success",
-      content: "注册成功, 请登录!"
-    });
-    setTimeout(() => {
-      setLoginOpen(true);
-    }, 500);
+      setEnrollOpen(false);
+      messageApi.open({
+        type: "success",
+        content: "注册成功, 请登录!"
+      });
+      setTimeout(() => {
+        setLoginOpen(true);
+      }, 500);
+    }
   };
 
   // 头像上传之前的check工作
