@@ -11,10 +11,19 @@ interface IProps {
   text: string;
   clickFn?: (isActive: boolean) => Promise<boolean>;
   checkInitIsActive?: () => boolean;
+  setIsShowComments?: any;
+  isMessage?: boolean;
 }
 
 const IconText: FC<IProps> = (props) => {
-  const { icon, text, clickFn, checkInitIsActive, activeIcon } = props;
+  const {
+    icon,
+    text,
+    clickFn,
+    checkInitIsActive,
+    activeIcon,
+    setIsShowComments
+  } = props;
   const [isActive, setIsActive] = useState(false);
   const [textVar, setTextVar] = useState(text);
 
@@ -37,6 +46,9 @@ const IconText: FC<IProps> = (props) => {
               }
               setIsActive(res);
             });
+          } else {
+            setIsShowComments(!isActive);
+            setIsActive((last) => !last);
           }
         }}
       >

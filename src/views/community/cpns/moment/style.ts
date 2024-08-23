@@ -1,13 +1,6 @@
 import styled from "styled-components";
 
 const MomentWrapper = styled.div`
-  :where(.ant-list-item) {
-    &:hover {
-      cursor: pointer;
-      background: #f7f8fa;
-    }
-  }
-
   :where(.ant-list-item-meta-content) {
     text-align: left;
   }
@@ -23,7 +16,15 @@ const MomentWrapper = styled.div`
   }
 
   :where(.css-dev-only-do-not-override-xlmt2j).ant-list-split .ant-list-item {
-    border-block-end: 5px solid rgba(5, 5, 5, 0.06);
+    border-block-end: 7px solid rgba(5, 5, 5, 0.06);
+  }
+
+  /* 头像调整 */
+  :where(
+      .ant-avatar.ant-avatar-circle.ant-avatar-image.css-dev-only-do-not-override-xlmt2j
+    ) {
+    width: 50px;
+    height: 50px;
   }
 `;
 
