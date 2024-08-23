@@ -19,13 +19,17 @@ const CommentAddIconTextWrapper = styled.div`
       display: flex;
       flex-direction: column;
       border-top: 1px solid rgba(5, 5, 5, 0.06);
-      padding: 10px 30px;
+      padding: 10px 15px;
 
       .header {
         text-align: left;
         font-size: 16px;
         font-weight: 500;
         color: #252933;
+      }
+
+      .write_comment_area {
+        margin-top: 10px;
       }
     }
   }

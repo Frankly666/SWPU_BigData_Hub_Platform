@@ -8,6 +8,7 @@ import {
   StarFilled,
   MessageFilled
 } from "@ant-design/icons";
+import { Avatar } from "antd";
 
 import CommentAddIconTextWrapper from "./style";
 import IconText from "../IconText";
@@ -19,6 +20,7 @@ import {
 } from "@/service/modules/moment";
 import { useAppSelector } from "@/store";
 import { IMoment } from "@/type/moment";
+import EditComments from "@/base_ui/editComments";
 
 interface IProps {
   chidren?: ReactNode;
@@ -27,8 +29,8 @@ interface IProps {
 
 const CommentAddIconText: FC<IProps> = ({ item }) => {
   const [isShowComments, setIsShowComments] = useState(false);
-  const { userId } = useAppSelector((state) => {
-    return { userId: state.user.userId };
+  const { userId, avatar } = useAppSelector((state) => {
+    return { userId: state.user.userId, avatar: state.user.avatar };
   });
 
   // 处理点击时用户的点赞或者取消点赞的操作
@@ -115,7 +117,14 @@ const CommentAddIconText: FC<IProps> = ({ item }) => {
         {isShowComments && (
           <div className="comments">
             <div className="header">评论 {item.commentsCount}</div>
-            <div className="write_comment_area"></div>
+            <div className="write_comment_area">
+              <EditComments
+                minHeight={90}
+                minWidth={600}
+                avatarSrc={avatar}
+                avatarSize={35}
+              />
+            </div>
             <div className="show_comments"></div>
           </div>
         )}
