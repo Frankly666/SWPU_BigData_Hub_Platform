@@ -20,6 +20,7 @@ import {
 } from "@/service/modules/moment";
 import { useAppSelector } from "@/store";
 import { formatTime } from "@/utils/formatData";
+import LabelAndTimeDesc from "@/components/labelAndTimeDesc";
 
 interface IProps {
   children?: ReactNode;
@@ -89,7 +90,6 @@ const Moment: FC<IProps> = () => {
       <List
         loading={loading}
         dataSource={data}
-        bordered
         itemLayout="vertical"
         renderItem={(item) => (
           <List.Item
@@ -139,7 +139,12 @@ const Moment: FC<IProps> = () => {
             <List.Item.Meta
               avatar={<Avatar src={item.userAvatar} />}
               title={<a href="https://ant.design">{item.user_name}</a>}
-              description={formatTime(item.createTime.toString())}
+              description={
+                <LabelAndTimeDesc
+                  lables={item.labels?.label_names as Array<string>}
+                  createTime={formatTime(item.createTime.toString())}
+                />
+              }
             />
 
             <div className="moment_content">{item.content}</div>

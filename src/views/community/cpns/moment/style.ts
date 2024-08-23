@@ -19,7 +19,11 @@ const MomentWrapper = styled.div`
 
   :where(.moment_content) {
     text-align: left;
-    padding: 0 0 0 48px;
+    padding: 0 48px;
+  }
+
+  :where(.css-dev-only-do-not-override-xlmt2j).ant-list-split .ant-list-item {
+    border-block-end: 5px solid rgba(5, 5, 5, 0.06);
   }
 `;
 
