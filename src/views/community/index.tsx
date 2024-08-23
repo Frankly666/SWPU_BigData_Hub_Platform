@@ -6,13 +6,14 @@ import {
   SmileOutlined,
   FormOutlined
 } from "@ant-design/icons";
+import { useNavigate } from "react-router";
 
 import CommunityWrapper from "./style";
 import { useAppDispatch, useAppSelector } from "@/store";
 import { changeTagNameAction } from "@/store/modules/main";
-import { useNavigate } from "react-router";
 import Moment from "./cpns/moment";
 import Essay from "./cpns/essay";
+import PublishMoment from "../publishMoment";
 
 interface IProps {
   children?: ReactNode;
@@ -44,7 +45,9 @@ const Community: FC<IProps> = () => {
     []
   );
   const [isShowPublish, setIsShowPublish] = useState(false);
+  const [isMoment, setIsMoment] = useState(true);
 
+  // 路由守卫
   useLayoutEffect(() => {
     dispatch(changeTagNameAction("community"));
     try {
@@ -58,7 +61,8 @@ const Community: FC<IProps> = () => {
   }, []);
 
   function handlePublish() {
-    setIsShowPublish(true);
+    if (isMoment) navigate("/publishMoment");
+    else navigate("/editEssay");
   }
 
   return (
@@ -67,29 +71,35 @@ const Community: FC<IProps> = () => {
         defaultActiveKey="1"
         items={items}
         tabBarExtraContent={
-          <Tooltip
-            title="Share your idea or experience"
-            color={"blue"}
-            key={"blue"}
-          >
-            <FormOutlined
-              style={{ fontSize: "17px" }}
-              onClick={handlePublish}
-            />
-          </Tooltip>
+          isMoment ? (
+            <Tooltip title="发表动态" color={"blue"} key={"blue"}>
+              <FormOutlined
+                style={{ fontSize: "17px" }}
+                onClick={handlePublish}
+              />
+            </Tooltip>
+          ) : (
+            <Tooltip title="写文章" color={"blue"} key={"blue"}>
+              <FormOutlined
+                style={{ fontSize: "17px" }}
+                onClick={handlePublish}
+              />
+            </Tooltip>
+          )
         }
+        onTabClick={(key) => {
+          setIsMoment(key === "1");
+        }}
       />
       <Modal
-        title="发表动态或文章"
+        title="发表动态"
         style={{ top: 20 }}
         open={isShowPublish}
         onOk={() => setIsShowPublish(false)}
         onCancel={() => setIsShowPublish(false)}
         maskClosable={false}
       >
-        <p>some contents...</p>
-        <p>some contents...</p>
-        <p>some contents...</p>
+        <PublishMoment />
       </Modal>
     </CommunityWrapper>
   );

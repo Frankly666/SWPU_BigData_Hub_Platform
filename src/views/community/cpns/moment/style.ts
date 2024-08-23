@@ -11,6 +11,16 @@ const MomentWrapper = styled.div`
   :where(.ant-list-item-meta-content) {
     text-align: left;
   }
+
+  /* 描述上移 */
+  :where(.ant-list-item-meta-description) {
+    margin-top: -10px;
+  }
+
+  :where(.moment_content) {
+    text-align: left;
+    padding: 0 0 0 48px;
+  }
 `;
 
 export default MomentWrapper;

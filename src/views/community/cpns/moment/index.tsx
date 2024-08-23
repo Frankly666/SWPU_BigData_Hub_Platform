@@ -19,6 +19,7 @@ import {
   getMoments
 } from "@/service/modules/moment";
 import { useAppSelector } from "@/store";
+import { formatTime } from "@/utils/formatData";
 
 interface IProps {
   children?: ReactNode;
@@ -88,6 +89,8 @@ const Moment: FC<IProps> = () => {
       <List
         loading={loading}
         dataSource={data}
+        bordered
+        itemLayout="vertical"
         renderItem={(item) => (
           <List.Item
             key={item.moment_id}
@@ -136,8 +139,11 @@ const Moment: FC<IProps> = () => {
             <List.Item.Meta
               avatar={<Avatar src={item.userAvatar} />}
               title={<a href="https://ant.design">{item.user_name}</a>}
-              description={item.content}
+              description={formatTime(item.createTime.toString())}
             />
+
+            <div className="moment_content">{item.content}</div>
+            {/* <img src="" alt="" /> */}
           </List.Item>
         )}
       />
