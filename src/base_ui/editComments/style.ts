@@ -20,6 +20,7 @@ const EditCommentsWrapper = styled.div<IStyled>`
     }
   }
   .right {
+    position: relative;
     min-height: ${(props) =>
       props.$minHeight ? props.$minHeight + "px" : "90px"};
     min-width: ${(props) =>
@@ -42,6 +43,39 @@ const EditCommentsWrapper = styled.div<IStyled>`
       border-radius: 4px; /* 边框圆角 */
       color: #333; /* 字体颜色 */
       outline: none; /* 点击时不显示轮廓 */
+    }
+
+    button {
+      position: absolute;
+      bottom: 10px;
+      right: 20px;
+      width: 60px;
+      height: 28px;
+      background-color: #1e80ff;
+      cursor: pointer;
+      font-size: 12px;
+      border-radius: 4px;
+      text-align: center;
+      line-height: 22px;
+      color: #fff;
+    }
+
+    .smile {
+      position: absolute;
+      bottom: 10px;
+      left: 20px;
+    }
+
+    .buttonDisabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  :where(.anticon.anticon-smile) {
+    svg {
+      width: 20px;
+      height: 20px;
     }
   }
 `;
