@@ -1,4 +1,4 @@
-import React, { memo, Suspense } from "react";
+import React, { memo, Suspense, useState } from "react";
 import type { FC, ReactNode } from "react";
 import { useLocation, useRoutes } from "react-router";
 import { routes } from "./router";
@@ -18,6 +18,7 @@ import useFlushedData from "./hooks/useFlushedData";
 import Loading from "@/components/loading";
 import { useAppSelector } from "@/store";
 import { useListenScroll } from "./hooks/useListenScroll";
+import useScreenWidthListener from "./hooks/useScreenWidthListener";
 
 interface IProps {
   children?: ReactNode;
@@ -29,6 +30,11 @@ const App: FC<IProps> = () => {
       isShowLoading: state.main.isShowLoading,
       isShowHeader: state.main.isShowHeader
     };
+  });
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  useScreenWidthListener((width) => {
+    console.log("width: ", width);
+    setScreenWidth(width);
   });
 
   // 自定义hook的使用
@@ -43,7 +49,7 @@ const App: FC<IProps> = () => {
         <Header
           style={{
             ...headerStyle,
-            transform: isShowHeader ? "translateY(0)" : `translateY(-${64}px)` // 向上移动64px
+            transform: isShowHeader ? "translateY(0)" : `translateY(-${64}px)` // 向上移动4rem
           }}
         >
           {<MyHeader></MyHeader>}
@@ -56,25 +62,34 @@ const App: FC<IProps> = () => {
           </Layout>
         ) : (
           <Layout style={contentLayoutStyle}>
-            <Sider
-              width="10%"
-              style={{
-                ...siderLeftStyle,
-                transform: isShowHeader
-                  ? "translateY(0)"
-                  : `translateY(-${64}px)`
-              }}
-            >
-              SiderLeft
-            </Sider>
+            {screenWidth > 1190 && (
+              <Sider
+                width="10%"
+                style={{
+                  ...siderLeftStyle,
+                  transform: isShowHeader
+                    ? "translateY(0)"
+                    : `translateY(-${64}px)`
+                }}
+              >
+                SiderLeft
+              </Sider>
+            )}
             <Suspense fallback={<Skeleton />}>
-              <Content style={{ ...contentStyle, marginLeft: "210px" }}>
+              <Content
+                style={{
+                  ...contentStyle,
+                  marginLeft: screenWidth > 1190 ? "13.125rem" : "0"
+                }}
+              >
                 {useRoutes(routes)}
               </Content>
             </Suspense>
-            <Sider width="20%" style={siderRightStyle}>
-              SiderRight
-            </Sider>
+            {screenWidth > 1190 && (
+              <Sider width="20%" style={siderRightStyle}>
+                SiderRight
+              </Sider>
+            )}
           </Layout>
         )}
         {/* 这个加载中的蒙版只有在登录时才会展示 */}

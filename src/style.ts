@@ -17,36 +17,36 @@ export const headerStyle: React.CSSProperties = {
   color: "black",
   height: 64,
   width: "100%",
-  lineHeight: "64px",
+  lineHeight: "4rem",
   backgroundColor: `#fff`,
-  borderBottom: "1px solid rgba(3,3,3,.2)",
+  borderBottom: ".0625rem solid rgba(3,3,3,.2)",
   transition:
     "transform 0.3s ease-in-out, height 0.3s ease-in-out, opacity 0.3s ease-in-out" // 添加过渡效果
 };
 
 export const siderLeftStyle: React.CSSProperties = {
   position: "fixed",
-  top: "64px",
+  top: "4rem",
   textAlign: "center",
-  lineHeight: "120px",
+  lineHeight: "7.5rem",
   color: "black",
   backgroundColor: "#d5f5f5",
-  marginTop: "20px",
+  marginTop: "1.25rem",
   transition: "transform 0.3s ease-in-out"
 };
 export const siderRightStyle: React.CSSProperties = {
   textAlign: "center",
-  lineHeight: "120px",
+  lineHeight: "7.5rem",
   color: "black",
   backgroundColor: "#d5f5f5",
-  marginTop: "20px"
+  marginTop: "1.25rem"
 };
 
 export const contentStyle: React.CSSProperties = {
   textAlign: "center",
   color: "black",
   backgroundColor: "#fff",
-  marginTop: "20px"
+  marginTop: "1.25rem"
 };
 
 export const footerStyle: React.CSSProperties = {
@@ -58,13 +58,13 @@ export const footerStyle: React.CSSProperties = {
 export const layoutStyle: React.CSSProperties = {
   overflow: "auto",
   width: `100%`,
-  minHeight: "1004px"
+  minHeight: "62.75rem"
 };
 
 export const contentLayoutStyle: React.CSSProperties = {
-  width: "1200px",
+  width: "75rem",
   margin: "0 auto",
-  paddingTop: "64px"
+  paddingTop: "4rem"
 };
 
 export default AppWrapper;

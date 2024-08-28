@@ -15,8 +15,8 @@ const MomentWrapper = styled.div`
     padding: 0 48px;
   }
 
-  :where(.css-dev-only-do-not-override-xlmt2j).ant-list-split .ant-list-item {
-    border-block-end: 7px solid rgba(5, 5, 5, 0.06);
+  :where(.css-dev-only-do-not-override-11lehqq).ant-list-split .ant-list-item {
+    border-block-end: 0.475rem solid rgba(5, 5, 5, 0.06);
   }
 
   /* 头像调整 */

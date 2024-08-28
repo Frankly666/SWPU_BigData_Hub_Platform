@@ -9,16 +9,16 @@ const LoginWrapper = styled.div`
   height: 100%;
   .top {
     display: flex;
-    margin: 30px 30px 40px 0;
+    margin: 1.875rem 1.875rem 2.5rem 0;
 
     h2 {
-      margin-left: 10px;
+      margin-left: 0.625rem;
     }
   }
 
   .form {
-    width: 400px;
-    margin-left: 20px;
+    width: 25rem;
+    margin-left: 1.25rem;
   }
 `;
 

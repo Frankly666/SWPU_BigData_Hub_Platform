@@ -14,15 +14,15 @@ const HeaderWrapper = styled.div<IStyled>`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 550px;
+    width: 34.375rem;
 
     .icon {
       display: flex;
       align-items: center;
       cursor: pointer;
       h1 {
-        font-size: 20px;
-        margin: 0 0 0 10px;
+        font-size: 1.25rem;
+        margin: 0 0 0 0.625rem;
         user-select: none;
       }
     }

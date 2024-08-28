@@ -6,11 +6,9 @@ interface IStyld {
 
 const IconTextWrapper = styled.div<IStyld>`
   width: 100%;
-  :where(
-      .ant-space.css-dev-only-do-not-override-xlmt2j.ant-space-horizontal.ant-space-align-center.ant-space-gap-row-small.ant-space-gap-col-small
-    ) {
-    cursor: pointer;
+  :where(.ant-space-item) svg {
     &:hover {
+      cursor: pointer;
       color: #1677ff;
     }
   }
@@ -18,8 +16,8 @@ const IconTextWrapper = styled.div<IStyld>`
   ${(props) => {
     return props.$isActive
       ? `:where(
-      .ant-space.css-dev-only-do-not-override-xlmt2j.ant-space-horizontal.ant-space-align-center.ant-space-gap-row-small.ant-space-gap-col-small
-    ) {
+      .ant-space-item
+    ) svg {
     color: #1677ff;
   }`
       : ``;
@@ -27,7 +25,7 @@ const IconTextWrapper = styled.div<IStyld>`
 
   :where(.ant-list-item-action) {
     position: relative;
-    bottom: 4px;
+    bottom: 0.25rem;
   }
 `;
 
