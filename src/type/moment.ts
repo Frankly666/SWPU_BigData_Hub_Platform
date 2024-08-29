@@ -20,6 +20,9 @@ interface Comment {
   comment_id: number | null;
   createTime: Date | null;
   user_name: string | null;
+  commentLike: Like | null;
+  commentSons: commentSons | null;
+  userAvatar: string | null;
 }
 
 interface Favor {
@@ -32,7 +35,12 @@ interface Labels {
   label_names?: string[];
 }
 
-export interface Like {
+interface Like {
   likeUserIdArr: Array<null | number>;
   likeCount: number;
+}
+
+interface commentSons {
+  likeCommentIdArr: Array<null | number>;
+  likeCommentCount: number;
 }

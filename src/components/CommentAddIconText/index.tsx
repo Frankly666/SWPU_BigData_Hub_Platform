@@ -21,6 +21,7 @@ import { useAppSelector } from "@/store";
 import { IMoment } from "@/type/moment";
 import EditComments from "@/base_ui/editComments";
 import ShowComments from "@/base_ui/showComments";
+import { formatTime } from "@/utils/formatData";
 
 interface IProps {
   chidren?: ReactNode;
@@ -124,9 +125,48 @@ const CommentAddIconText: FC<IProps> = ({ item }) => {
                 avatarSrc={avatar}
                 avatarSize={35}
               />
-              {/* <ShowComments /> */}
             </div>
-            <div className="show_comments"></div>
+            <div className="commentsList">
+              {item.comments.map((term, index) => {
+                if (term.commentSons) {
+                  // 找到子评论
+                  const sons = item.comments.filter((i) => {
+                    return term.commentSons?.likeCommentIdArr.includes(i.id);
+                  });
+
+                  return (
+                    <div key={index} className="mainComment">
+                      <div className="top">
+                        <ShowComments
+                          avatarSize={30}
+                          avatarSrc={term.userAvatar as string}
+                          content={term.content as string}
+                          createTime={formatTime(
+                            term.createTime?.toString() as string
+                          )}
+                          userName={term.user_name as string}
+                          likeCount={
+                            term.commentLike?.likeCount.toString() as string
+                          }
+                          commentId={term.id?.toString() as string}
+                          momentId={term.moment_id?.toString() as string}
+                          commentLikeList={
+                            term.commentLike?.likeUserIdArr as Array<number>
+                          }
+                        />
+                      </div>
+                      <div className="sonList">
+                        {sons.map((j, index) => (
+                          <div key={index}>{j.content}</div>
+                        ))}
+                      </div>
+                    </div>
+                  );
+                } else {
+                  return <div key={index}></div>;
+                }
+              })}
+            </div>
           </div>
         )}
       </div>

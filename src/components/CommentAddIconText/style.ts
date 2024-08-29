@@ -31,6 +31,10 @@ const CommentAddIconTextWrapper = styled.div`
       .write_comment_area {
         margin-top: 0.625rem;
       }
+
+      .commentsList {
+        margin-top: 40px;
+      }
     }
   }
 `;

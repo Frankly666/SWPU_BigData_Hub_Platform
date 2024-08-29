@@ -6,16 +6,36 @@ interface IStyled {
 
 const ShowCommentsWrapper = styled.div<IStyled>`
   display: flex;
-  justify-content: space-between;
   height: 100%;
 
   .left {
+    margin-right: 15px;
+
     img {
       border-radius: 50%;
       width: ${(props) =>
         props.$avatarSize ? props.$avatarSize + "px" : "40px"};
       height: ${(props) =>
         props.$avatarSize ? props.$avatarSize + "px" : "40px"};
+    }
+  }
+
+  .right {
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+
+    .header {
+      font-weight: 400;
+      .userName {
+        color: #515767;
+      }
+    }
+
+    .content {
+      margin-top: 8px;
+      text-align: left;
+      color: #252933;
     }
   }
 `;
