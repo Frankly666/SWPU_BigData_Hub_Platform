@@ -28,9 +28,9 @@ const EditComments: FC<IProps> = ({
   const [isListen, setIsListen] = useState(true);
   const [isSend, setIsSend] = useState(true);
   const [isListenBlur, setIsListenBlur] = useState(true);
+  const [openSmile, setOpenSmile] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const smileRef = useRef<HTMLInputElement>(null);
   const [selectedImages, setSelectedImages] = useState<Array<File>>([]);
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -66,10 +66,6 @@ const EditComments: FC<IProps> = ({
           backgroundColor: bgc
         }}
         onClick={(e) => {
-          console.log(
-            "e.target === smileRef.current;: ",
-            e.target === smileRef.current
-          );
           inputRef.current?.focus();
         }}
         onMouseEnter={() => {
@@ -95,6 +91,7 @@ const EditComments: FC<IProps> = ({
             setBgc("#f2f3f5");
             setBorder("white");
             setIsListen(true);
+            setOpenSmile(false);
           }}
           onChange={(e) => {
             if (e.target.value) {
@@ -109,19 +106,29 @@ const EditComments: FC<IProps> = ({
           <Popover
             placement="top"
             trigger="click"
+            open={openSmile}
             content={
-              <Picker
-                data={data}
-                onEmojiSelect={console.log}
-                emojiSize={20}
-                skinTonePosition="none"
-              />
+              <div
+                onMouseEnter={() => {
+                  setIsListenBlur(false);
+                }}
+                onMouseLeave={() => {
+                  setIsListenBlur(true);
+                }}
+              >
+                <Picker
+                  data={data}
+                  onEmojiSelect={console.log}
+                  emojiSize={20}
+                  skinTonePosition="none"
+                  searchPosition="none"
+                />
+              </div>
             }
           >
             <SmileOutlined
-              ref={smileRef}
-              onClick={(e) => {
-                console.log(e);
+              onClick={() => {
+                setOpenSmile((last) => !last);
               }}
             />
           </Popover>

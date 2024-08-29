@@ -51,6 +51,7 @@ const IconText: FC<IProps> = (props) => {
             setIsActive((last) => !last);
           }
         }}
+        style={{ color: isActive ? "#1677ff" : "" }}
       >
         {activeIcon && isActive
           ? React.createElement(activeIcon)

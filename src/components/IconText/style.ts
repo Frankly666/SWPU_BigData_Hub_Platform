@@ -6,14 +6,15 @@ interface IStyld {
 
 const IconTextWrapper = styled.div<IStyld>`
   width: 100%;
-  :where(.ant-space-item) svg {
+
+  :where(.ant-space) {
     &:hover {
       cursor: pointer;
       color: #1677ff;
     }
   }
 
-  ${(props) => {
+  /* ${(props) => {
     return props.$isActive
       ? `:where(
       .ant-space-item
@@ -21,7 +22,7 @@ const IconTextWrapper = styled.div<IStyld>`
     color: #1677ff;
   }`
       : ``;
-  }};
+  }}; */
 
   :where(.ant-list-item-action) {
     position: relative;

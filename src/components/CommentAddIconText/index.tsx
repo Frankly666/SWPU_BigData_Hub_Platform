@@ -8,7 +8,6 @@ import {
   StarFilled,
   MessageFilled
 } from "@ant-design/icons";
-import { Avatar } from "antd";
 
 import CommentAddIconTextWrapper from "./style";
 import IconText from "../IconText";
@@ -21,6 +20,7 @@ import {
 import { useAppSelector } from "@/store";
 import { IMoment } from "@/type/moment";
 import EditComments from "@/base_ui/editComments";
+import ShowComments from "@/base_ui/showComments";
 
 interface IProps {
   chidren?: ReactNode;
@@ -124,6 +124,7 @@ const CommentAddIconText: FC<IProps> = ({ item }) => {
                 avatarSrc={avatar}
                 avatarSize={35}
               />
+              {/* <ShowComments /> */}
             </div>
             <div className="show_comments"></div>
           </div>
