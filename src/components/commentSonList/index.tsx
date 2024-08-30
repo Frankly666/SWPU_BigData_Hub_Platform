@@ -46,7 +46,7 @@ const CommentSonList: FC<IProps> = ({ sons, momentAuthor }) => {
             setShowNum(sons.length);
           }}
         >
-          查看全部 {sons.length.toString()} 条评论 {<DownOutlined />}
+          查看全部 {sons.length.toString()} 条回复 {<DownOutlined />}
         </div>
       )}
     </CommentSonListWrapper>

@@ -38,7 +38,7 @@ const header: FC<IProps> = memo(() => {
   };
 
   return (
-    <HeaderWrapper className="wrapper01" $tagName={tagName}>
+    <HeaderWrapper $tagName={tagName}>
       <div className={classNames("left")}>
         <div className="icon" onClick={toHome}>
           <BigdataSvg size="30"></BigdataSvg>
