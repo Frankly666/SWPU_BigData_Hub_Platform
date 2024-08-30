@@ -1,4 +1,4 @@
-import React, { memo, useRef, useState } from "react";
+import React, { memo, useEffect, useRef, useState } from "react";
 import type { FC, ReactNode } from "react";
 import { SmileOutlined } from "@ant-design/icons";
 import { Popover } from "antd";
@@ -10,21 +10,25 @@ import classNames from "classnames";
 
 interface IProps {
   children?: ReactNode;
-  avatarSrc: string;
-  minHeight: number;
-  minWidth: number;
-  avatarSize: number;
+  avatarSrc?: string;
+  minHeight?: number;
+  minWidth?: number;
+  avatarSize?: number;
+  isShowAvatar?: boolean;
+  isAnimation?: boolean;
 }
 
 const EditComments: FC<IProps> = ({
   avatarSrc,
   minHeight,
   minWidth,
-  avatarSize
+  avatarSize,
+  isShowAvatar = true,
+  isAnimation = true
 }) => {
   const [rightHeight, setRightHeight] = useState("0");
-  const [border, setBorder] = useState("white");
-  const [bgc, setBgc] = useState("#f2f3f5");
+  const [border, setBorder] = useState(isAnimation ? "white" : "#1e80ff");
+  const [bgc, setBgc] = useState(isAnimation ? "#f2f3f5" : "white");
   const [isListen, setIsListen] = useState(true);
   const [isSend, setIsSend] = useState(true);
   const [isListenBlur, setIsListenBlur] = useState(true);
@@ -49,15 +53,21 @@ const EditComments: FC<IProps> = ({
       setSelectedImages(images);
     }
   };
+
+  useEffect(() => {
+    if (!isAnimation) inputRef.current?.focus();
+  }, []);
   return (
     <EditCommentsWrapper
       $minHeight={minHeight}
       $minWidth={minWidth}
       $avatarSize={avatarSize}
     >
-      <div className="left">
-        <img src={avatarSrc} />
-      </div>
+      {isShowAvatar && (
+        <div className="left">
+          <img src={avatarSrc} />
+        </div>
+      )}
       <div
         className="right"
         style={{
@@ -69,23 +79,25 @@ const EditComments: FC<IProps> = ({
           inputRef.current?.focus();
         }}
         onMouseEnter={() => {
-          if (isListen) setBgc("#e4e6eb");
+          if (isListen && isAnimation) setBgc("#e4e6eb");
           setIsListenBlur(false);
         }}
         onMouseLeave={() => {
-          if (isListen) setBgc("#f2f3f5");
+          if (isListen && isAnimation) setBgc("#f2f3f5");
           setIsListenBlur(true);
         }}
       >
         <input
           ref={inputRef}
           onFocus={() => {
+            if (!isAnimation) return;
             setRightHeight("200px");
             setBgc("white");
             setBorder("#1e80ff");
             setIsListen(false);
           }}
           onBlur={(e) => {
+            if (!isAnimation) return;
             if (!isListenBlur) return;
             setRightHeight("0");
             setBgc("#f2f3f5");
