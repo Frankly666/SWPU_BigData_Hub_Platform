@@ -12,7 +12,7 @@ export interface IMoment {
   user_name: string | null;
 }
 
-interface Comment {
+export interface Comment {
   id: number | null;
   content: null | string;
   user_id: number | null;
@@ -23,6 +23,7 @@ interface Comment {
   commentLike: Like | null;
   commentSons: commentSons | null;
   userAvatar: string | null;
+  commentToCommentId: number | null;
 }
 
 interface Favor {
@@ -41,6 +42,6 @@ interface Like {
 }
 
 interface commentSons {
-  likeCommentIdArr: Array<null | number>;
-  likeCommentCount: number;
+  commentIdArr: Array<null | number>;
+  commentCount: number;
 }

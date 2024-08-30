@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import React, { memo, useMemo, useState } from "react";
 import type { FC, ReactNode } from "react";
 import {
   LikeOutlined,
@@ -18,7 +18,7 @@ import {
   deleteMomentLike
 } from "@/service/modules/moment";
 import { useAppSelector } from "@/store";
-import { IMoment } from "@/type/moment";
+import { Comment, IMoment } from "@/type/moment";
 import EditComments from "@/base_ui/editComments";
 import ShowComments from "@/base_ui/showComments";
 import { formatTime } from "@/utils/formatData";
@@ -33,6 +33,14 @@ const CommentAddIconText: FC<IProps> = ({ item }) => {
   const { userId, avatar } = useAppSelector((state) => {
     return { userId: state.user.userId, avatar: state.user.avatar };
   });
+
+  const realCommentCount = useMemo(() => {
+    let cnt = 0;
+    item.comments.forEach((term) => {
+      if (!term.comment_id && term.id) cnt++;
+    });
+    return cnt.toString();
+  }, [item]);
 
   // 处理点击时用户的点赞或者取消点赞的操作
   async function handleIconClick(
@@ -66,7 +74,7 @@ const CommentAddIconText: FC<IProps> = ({ item }) => {
 
   // 用于初始化展示用户是否点赞
   function userIsExistInList(userIdList: Array<number>): boolean {
-    return userIdList.includes(userId as number);
+    return userIdList?.includes(userId as number);
   }
 
   return (
@@ -110,35 +118,35 @@ const CommentAddIconText: FC<IProps> = ({ item }) => {
           <IconText
             icon={MessageOutlined}
             activeIcon={MessageFilled}
-            text={item.commentsCount?.toString()}
+            text={realCommentCount}
             key="list-vertical-message"
             setIsShowComments={setIsShowComments}
           />
         </div>
         {isShowComments && (
           <div className="comments">
-            <div className="header">评论 {item.commentsCount}</div>
+            <div className="header">评论 {realCommentCount}</div>
             <div className="write_comment_area">
               <EditComments
                 minHeight={90}
                 minWidth={600}
                 avatarSrc={avatar}
-                avatarSize={35}
+                avatarSize={40}
               />
             </div>
             <div className="commentsList">
-              {item.comments.map((term, index) => {
-                if (term.commentSons) {
+              {item.comments.map((term: Comment, index) => {
+                if (term.commentSons && term.comment_id) {
                   // 找到子评论
                   const sons = item.comments.filter((i) => {
-                    return term.commentSons?.likeCommentIdArr.includes(i.id);
+                    return term.commentSons?.commentIdArr?.includes(i.id);
                   });
 
                   return (
                     <div key={index} className="mainComment">
                       <div className="top">
                         <ShowComments
-                          avatarSize={30}
+                          avatarSize={25}
                           avatarSrc={term.userAvatar as string}
                           content={term.content as string}
                           createTime={formatTime(
@@ -153,6 +161,9 @@ const CommentAddIconText: FC<IProps> = ({ item }) => {
                           commentLikeList={
                             term.commentLike?.likeUserIdArr as Array<number>
                           }
+                          commentSonsCount={
+                            term.commentSons?.commentCount.toString() as string
+                          }
                         />
                       </div>
                       <div className="sonList">
@@ -162,8 +173,32 @@ const CommentAddIconText: FC<IProps> = ({ item }) => {
                       </div>
                     </div>
                   );
-                } else {
-                  return <div key={index}></div>;
+                } else if (term.id) {
+                  if (term.comment_id) return;
+                  return (
+                    <div key={index} className="mainComment">
+                      <ShowComments
+                        avatarSize={30}
+                        avatarSrc={term.userAvatar as string}
+                        content={term.content as string}
+                        createTime={formatTime(
+                          term.createTime?.toString() as string
+                        )}
+                        userName={term.user_name as string}
+                        likeCount={
+                          term.commentLike?.likeCount.toString() as string
+                        }
+                        commentId={term.id?.toString() as string}
+                        momentId={term.moment_id?.toString() as string}
+                        commentLikeList={
+                          term.commentLike?.likeUserIdArr as Array<number>
+                        }
+                        commentSonsCount={
+                          term.commentSons?.commentCount.toString() as string
+                        }
+                      />
+                    </div>
+                  );
                 }
               })}
             </div>

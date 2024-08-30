@@ -2,12 +2,9 @@ import styled from "styled-components";
 
 const BottomWrapper = styled.div`
   display: flex;
-  margin-top: 8px;
-
-  .time {
-    margin-right: 20px;
-  }
-
+  justify-content: space-between;
+  margin-top: 4px;
+  width: 220px;
   .main {
     .icon {
       display: flex;

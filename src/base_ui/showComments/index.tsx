@@ -15,6 +15,7 @@ interface IProps {
   momentId: string;
   commentId: string;
   commentLikeList: Array<number>;
+  commentSonsCount: string;
 }
 
 const ShowComments: FC<IProps> = ({
@@ -26,7 +27,8 @@ const ShowComments: FC<IProps> = ({
   likeCount,
   momentId,
   commentId,
-  commentLikeList
+  commentLikeList,
+  commentSonsCount
 }) => {
   return (
     <ShowCommentsWrapper $avatarSize={avatarSize}>
@@ -45,6 +47,7 @@ const ShowComments: FC<IProps> = ({
           momentId={momentId}
           commentId={commentId}
           commentLikeList={commentLikeList}
+          commentSonsCount={commentSonsCount}
         />
       </div>
     </ShowCommentsWrapper>

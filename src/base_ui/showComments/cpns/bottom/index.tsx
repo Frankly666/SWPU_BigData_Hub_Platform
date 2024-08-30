@@ -19,6 +19,7 @@ interface IProps {
   momentId: string;
   commentId: string;
   commentLikeList: Array<number>;
+  commentSonsCount: string;
 }
 
 const Bottom: FC<IProps> = ({
@@ -26,7 +27,8 @@ const Bottom: FC<IProps> = ({
   likeCount,
   momentId,
   commentId,
-  commentLikeList
+  commentLikeList,
+  commentSonsCount
 }) => {
   const { userId, avatar } = useAppSelector((state) => {
     return { userId: state.user.userId, avatar: state.user.avatar };
@@ -53,7 +55,7 @@ const Bottom: FC<IProps> = ({
 
   // 用于初始化展示用户是否点赞
   function userIsExistInList(commentLikeList: Array<number>): boolean {
-    return commentLikeList.includes(userId as number);
+    return commentLikeList?.includes(userId as number);
   }
 
   return (
@@ -78,11 +80,11 @@ const Bottom: FC<IProps> = ({
               return userIsExistInList(commentLikeList);
             }}
           />
-          <div className="space" style={{ width: "30px" }}></div>
+          <div className="space" style={{ width: "25px" }}></div>
           <IconText
             icon={MessageOutlined}
             activeIcon={MessageFilled}
-            text={likeCount}
+            text={commentSonsCount || "0"}
           />
         </div>
       </div>

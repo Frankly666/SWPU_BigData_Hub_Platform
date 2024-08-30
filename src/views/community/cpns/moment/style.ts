@@ -12,7 +12,7 @@ const MomentWrapper = styled.div`
 
   :where(.moment_content) {
     text-align: left;
-    padding: 0 48px;
+    padding: 0 62px;
   }
 
   :where(.css-dev-only-do-not-override-11lehqq).ant-list-split .ant-list-item {
@@ -20,11 +20,16 @@ const MomentWrapper = styled.div`
   }
 
   /* 头像调整 */
-  :where(
-      .ant-avatar.ant-avatar-circle.ant-avatar-image.css-dev-only-do-not-override-xlmt2j
-    ) {
-    width: 50px;
-    height: 50px;
+  :where(.css-dev-only-do-not-override-11lehqq).ant-avatar {
+    width: 48px;
+    height: 48px;
+  }
+
+  :where(.css-dev-only-do-not-override-11lehqq).ant-list-vertical
+    .ant-list-item
+    .ant-list-item-action
+    > li:first-child {
+    width: 100%;
   }
 `;
 

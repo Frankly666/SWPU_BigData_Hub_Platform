@@ -33,7 +33,7 @@ const ShowCommentsWrapper = styled.div<IStyled>`
     }
 
     .content {
-      margin-top: 8px;
+      margin-top: 4px;
       text-align: left;
       color: #252933;
     }

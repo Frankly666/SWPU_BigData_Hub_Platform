@@ -12,7 +12,7 @@ const CommentAddIconTextWrapper = styled.div`
       justify-content: space-between;
       border-top: 0.0625rem solid rgba(5, 5, 5, 0.06);
       padding: 0.5rem 0;
-      width: 43.75rem;
+      width: 100%;
     }
 
     .comments {
@@ -23,7 +23,7 @@ const CommentAddIconTextWrapper = styled.div`
 
       .header {
         text-align: left;
-        font-size: 1rem;
+        font-size: 14px;
         font-weight: 500;
         color: #252933;
       }
@@ -33,7 +33,11 @@ const CommentAddIconTextWrapper = styled.div`
       }
 
       .commentsList {
-        margin-top: 40px;
+        margin-top: 20px;
+
+        .mainComment {
+          margin-top: 30px;
+        }
       }
     }
   }
