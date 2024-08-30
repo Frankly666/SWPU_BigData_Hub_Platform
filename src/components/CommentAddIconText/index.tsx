@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useState } from "react";
+import React, { memo, useMemo, useRef, useState } from "react";
 import type { FC, ReactNode } from "react";
 import {
   LikeOutlined,
@@ -6,8 +6,10 @@ import {
   StarOutlined,
   LikeFilled,
   StarFilled,
-  MessageFilled
+  MessageFilled,
+  DownOutlined
 } from "@ant-design/icons";
+import { Button } from "antd";
 
 import CommentAddIconTextWrapper from "./style";
 import IconText from "../IconText";
@@ -22,6 +24,7 @@ import { Comment, IMoment } from "@/type/moment";
 import EditComments from "@/base_ui/editComments";
 import ShowComments from "@/base_ui/showComments";
 import { formatTime } from "@/utils/formatData";
+import CommentSonList from "../commentSonList";
 
 interface IProps {
   chidren?: ReactNode;
@@ -33,7 +36,9 @@ const CommentAddIconText: FC<IProps> = ({ item }) => {
   const { userId, avatar } = useAppSelector((state) => {
     return { userId: state.user.userId, avatar: state.user.avatar };
   });
+  const [showMainNum, setShowMainNum] = useState(3);
 
+  // 除去子评论的主评论数
   const realCommentCount = useMemo(() => {
     let cnt = 0;
     item.comments.forEach((term) => {
@@ -142,88 +147,79 @@ const CommentAddIconText: FC<IProps> = ({ item }) => {
               />
             </div>
             <div className="commentsList">
-              {item.comments.map((term: Comment, index) => {
-                const mainItem = (
-                  <ShowComments
-                    author={item.user_name as string}
-                    avatarSize={25}
-                    avatarSrc={term.userAvatar as string}
-                    content={term.content as string}
-                    createTime={formatTime(
-                      term.createTime?.toString() as string
-                    )}
-                    userName={term.user_name as string}
-                    likeCount={term.commentLike?.likeCount.toString() as string}
-                    commentId={term.id?.toString() as string}
-                    momentId={term.moment_id?.toString() as string}
-                    commentLikeList={
-                      term.commentLike?.likeUserIdArr as Array<number>
-                    }
-                    commentSonsCount={
-                      term.commentSons?.commentCount.toString() as string
-                    }
-                  />
-                );
+              {item.comments
+                .slice(0, showMainNum + 1)
+                .map((term: Comment, index) => {
+                  const mainItem = (
+                    <ShowComments
+                      author={item.user_name as string}
+                      avatarSize={25}
+                      avatarSrc={term.userAvatar as string}
+                      content={term.content as string}
+                      createTime={formatTime(
+                        term.createTime?.toString() as string
+                      )}
+                      userName={term.user_name as string}
+                      likeCount={
+                        term.commentLike?.likeCount.toString() as string
+                      }
+                      commentId={term.id?.toString() as string}
+                      momentId={term.moment_id?.toString() as string}
+                      commentLikeList={
+                        term.commentLike?.likeUserIdArr as Array<number>
+                      }
+                      commentSonsCount={
+                        term.commentSons?.commentCount.toString() as string
+                      }
+                    />
+                  );
 
-                if (term.commentSons && !term.comment_id) {
-                  // 找到子评论
-                  const sons = item.comments.filter((i) => {
-                    return term.commentSons?.commentIdArr?.includes(i.id);
-                  });
+                  if (term.commentSons && !term.comment_id) {
+                    // 找到子评论
+                    const sons = item.comments.filter((i) => {
+                      return term.commentSons?.commentIdArr?.includes(i.id);
+                    });
 
-                  // 按照时间排序, 与主评论不同
-                  sons.sort((a, b) => {
-                    const dateA = new Date(a.createTime);
-                    const dateB = new Date(b.createTime);
-                    return dateA.getTime() - dateB.getTime();
-                  });
+                    // 按照时间排序, 与主评论不同
+                    sons.sort((a, b) => {
+                      const dateA = new Date(a.createTime);
+                      const dateB = new Date(b.createTime);
+                      return dateA.getTime() - dateB.getTime();
+                    });
 
-                  return (
-                    <div key={index} className="mainComment">
-                      <div className="top">{mainItem}</div>
-
-                      <div className="commentSons">
-                        {sons.map((term, index) => (
-                          <div className="wrap1" key={index}>
-                            <ShowComments
-                              isSon={true}
-                              commentToCommentUserName={
-                                term.commentToCommentUserName as string
-                              }
-                              author={item.user_name as string}
-                              avatarSize={25}
-                              avatarSrc={term.userAvatar as string}
-                              content={term.content as string}
-                              createTime={formatTime(
-                                term.createTime?.toString() as string
-                              )}
-                              userName={term.user_name as string}
-                              likeCount={
-                                term.commentLike?.likeCount.toString() as string
-                              }
-                              commentId={term.id?.toString() as string}
-                              momentId={term.moment_id?.toString() as string}
-                              commentLikeList={
-                                term.commentLike?.likeUserIdArr as Array<number>
-                              }
-                              commentSonsCount={
-                                term.commentSons?.commentCount.toString() as string
-                              }
-                            />
-                          </div>
-                        ))}
+                    return (
+                      <div key={index} className="mainComment">
+                        <div className="top">{mainItem}</div>
+                        <CommentSonList
+                          sons={sons}
+                          momentAuthor={item.user_name as string}
+                        />
                       </div>
-                    </div>
-                  );
-                } else if (term.id) {
-                  if (term.comment_id) return;
-                  return (
-                    <div key={index} className="mainComment">
-                      {mainItem}
-                    </div>
-                  );
-                }
-              })}
+                    );
+                  } else if (term.id) {
+                    if (term.comment_id) return;
+                    return (
+                      <div key={index} className="mainComment">
+                        {mainItem}
+                      </div>
+                    );
+                  }
+                })}
+              <div className="btn">
+                {showMainNum < parseInt(realCommentCount) && (
+                  <Button
+                    block
+                    onClick={() => {
+                      if (showMainNum < 15) setShowMainNum(15);
+
+                      // 跳转至完整的详情页
+                    }}
+                  >
+                    查看全部 {realCommentCount} 条评论
+                    {showMainNum < 15 && <DownOutlined />}
+                  </Button>
+                )}
+              </div>
             </div>
           </div>
         )}

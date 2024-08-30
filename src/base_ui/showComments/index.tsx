@@ -56,7 +56,7 @@ const ShowComments: FC<IProps> = ({
                 {commentToCommentUserName
                   ? " 回复 " + commentToCommentUserName
                   : ""}
-                {commentToCommentUserName === author ? authorLabel : ":"}
+                {commentToCommentUserName === author ? authorLabel : " : "}
                 {content}
               </div>
             </div>

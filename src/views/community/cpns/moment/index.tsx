@@ -7,7 +7,7 @@ import { IMoment } from "@/type/moment";
 import { getMoments } from "@/service/modules/moment";
 import { formatTime } from "@/utils/formatData";
 import LabelAndTimeDesc from "@/components/labelAndTimeDesc";
-import CommentAddIconText from "@/components/CommentAddIconText";
+import CommentAddIconText from "@/components/commentAddIconText";
 
 interface IProps {
   children?: ReactNode;
