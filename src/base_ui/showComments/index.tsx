@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo, useMemo } from "react";
 import type { FC, ReactNode } from "react";
 
 import ShowCommentsWrapper from "./style";
@@ -16,6 +16,9 @@ interface IProps {
   commentId: string;
   commentLikeList: Array<number>;
   commentSonsCount: string;
+  isSon?: boolean;
+  commentToCommentUserName?: string;
+  author: string;
 }
 
 const ShowComments: FC<IProps> = ({
@@ -28,19 +31,48 @@ const ShowComments: FC<IProps> = ({
   momentId,
   commentId,
   commentLikeList,
-  commentSonsCount
+  commentSonsCount,
+  isSon = false,
+  commentToCommentUserName,
+  author
 }) => {
+  const authorLabel = useMemo(() => {
+    return <span className="author">作者</span>;
+  }, []);
+
   return (
     <ShowCommentsWrapper $avatarSize={avatarSize}>
       <div className="left">
         <img src={avatarSrc} />
       </div>
       <div className="right">
-        <div className="header">
-          <div className="userName">{userName}</div>
-          <div className="label"></div>
-        </div>
-        <div className="content">{content}</div>
+        {isSon ? (
+          <>
+            <div className="header">
+              <div className="content">
+                {userName}
+                {userName === author ? authorLabel : ""}
+
+                {commentToCommentUserName
+                  ? " 回复 " + commentToCommentUserName
+                  : ""}
+                {commentToCommentUserName === author ? authorLabel : ":"}
+                {content}
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="header">
+              <div className="userName">
+                {userName}
+                {userName === author ? authorLabel : ""}
+              </div>
+              <div className="label"></div>
+            </div>
+            <div className="content">{content}</div>
+          </>
+        )}
         <Bottom
           time={createTime}
           likeCount={likeCount}

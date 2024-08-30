@@ -42,6 +42,13 @@ const CommentAddIconText: FC<IProps> = ({ item }) => {
     return cnt.toString();
   }, [item]);
 
+  // 主评论排序
+  item.comments.sort((a, b) => {
+    const dateA = new Date(a.createTime);
+    const dateB = new Date(b.createTime);
+    return dateB.getTime() - dateA.getTime();
+  });
+
   // 处理点击时用户的点赞或者取消点赞的操作
   async function handleIconClick(
     userIdList: Array<number>,
@@ -136,39 +143,74 @@ const CommentAddIconText: FC<IProps> = ({ item }) => {
             </div>
             <div className="commentsList">
               {item.comments.map((term: Comment, index) => {
-                if (term.commentSons && term.comment_id) {
+                const mainItem = (
+                  <ShowComments
+                    author={item.user_name as string}
+                    avatarSize={25}
+                    avatarSrc={term.userAvatar as string}
+                    content={term.content as string}
+                    createTime={formatTime(
+                      term.createTime?.toString() as string
+                    )}
+                    userName={term.user_name as string}
+                    likeCount={term.commentLike?.likeCount.toString() as string}
+                    commentId={term.id?.toString() as string}
+                    momentId={term.moment_id?.toString() as string}
+                    commentLikeList={
+                      term.commentLike?.likeUserIdArr as Array<number>
+                    }
+                    commentSonsCount={
+                      term.commentSons?.commentCount.toString() as string
+                    }
+                  />
+                );
+
+                if (term.commentSons && !term.comment_id) {
                   // 找到子评论
                   const sons = item.comments.filter((i) => {
                     return term.commentSons?.commentIdArr?.includes(i.id);
                   });
 
+                  // 按照时间排序, 与主评论不同
+                  sons.sort((a, b) => {
+                    const dateA = new Date(a.createTime);
+                    const dateB = new Date(b.createTime);
+                    return dateA.getTime() - dateB.getTime();
+                  });
+
                   return (
                     <div key={index} className="mainComment">
-                      <div className="top">
-                        <ShowComments
-                          avatarSize={25}
-                          avatarSrc={term.userAvatar as string}
-                          content={term.content as string}
-                          createTime={formatTime(
-                            term.createTime?.toString() as string
-                          )}
-                          userName={term.user_name as string}
-                          likeCount={
-                            term.commentLike?.likeCount.toString() as string
-                          }
-                          commentId={term.id?.toString() as string}
-                          momentId={term.moment_id?.toString() as string}
-                          commentLikeList={
-                            term.commentLike?.likeUserIdArr as Array<number>
-                          }
-                          commentSonsCount={
-                            term.commentSons?.commentCount.toString() as string
-                          }
-                        />
-                      </div>
-                      <div className="sonList">
-                        {sons.map((j, index) => (
-                          <div key={index}>{j.content}</div>
+                      <div className="top">{mainItem}</div>
+
+                      <div className="commentSons">
+                        {sons.map((term, index) => (
+                          <div className="wrap1" key={index}>
+                            <ShowComments
+                              isSon={true}
+                              commentToCommentUserName={
+                                term.commentToCommentUserName as string
+                              }
+                              author={item.user_name as string}
+                              avatarSize={25}
+                              avatarSrc={term.userAvatar as string}
+                              content={term.content as string}
+                              createTime={formatTime(
+                                term.createTime?.toString() as string
+                              )}
+                              userName={term.user_name as string}
+                              likeCount={
+                                term.commentLike?.likeCount.toString() as string
+                              }
+                              commentId={term.id?.toString() as string}
+                              momentId={term.moment_id?.toString() as string}
+                              commentLikeList={
+                                term.commentLike?.likeUserIdArr as Array<number>
+                              }
+                              commentSonsCount={
+                                term.commentSons?.commentCount.toString() as string
+                              }
+                            />
+                          </div>
                         ))}
                       </div>
                     </div>
@@ -177,26 +219,7 @@ const CommentAddIconText: FC<IProps> = ({ item }) => {
                   if (term.comment_id) return;
                   return (
                     <div key={index} className="mainComment">
-                      <ShowComments
-                        avatarSize={30}
-                        avatarSrc={term.userAvatar as string}
-                        content={term.content as string}
-                        createTime={formatTime(
-                          term.createTime?.toString() as string
-                        )}
-                        userName={term.user_name as string}
-                        likeCount={
-                          term.commentLike?.likeCount.toString() as string
-                        }
-                        commentId={term.id?.toString() as string}
-                        momentId={term.moment_id?.toString() as string}
-                        commentLikeList={
-                          term.commentLike?.likeUserIdArr as Array<number>
-                        }
-                        commentSonsCount={
-                          term.commentSons?.commentCount.toString() as string
-                        }
-                      />
+                      {mainItem}
                     </div>
                   );
                 }

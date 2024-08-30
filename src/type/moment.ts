@@ -18,12 +18,13 @@ export interface Comment {
   user_id: number | null;
   moment_id: number | null;
   comment_id: number | null;
-  createTime: Date | null;
+  createTime: Date;
   user_name: string | null;
   commentLike: Like | null;
   commentSons: commentSons | null;
   userAvatar: string | null;
   commentToCommentId: number | null;
+  commentToCommentUserName: string | null;
 }
 
 interface Favor {

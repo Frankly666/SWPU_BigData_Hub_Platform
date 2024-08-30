@@ -37,6 +37,14 @@ const CommentAddIconTextWrapper = styled.div`
 
         .mainComment {
           margin-top: 30px;
+
+          .commentSons {
+            padding-left: 39px;
+            margin-top: 10px;
+            .wrap1 {
+              margin-top: 8px;
+            }
+          }
         }
       }
     }

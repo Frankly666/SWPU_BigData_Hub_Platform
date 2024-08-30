@@ -26,10 +26,18 @@ const ShowCommentsWrapper = styled.div<IStyled>`
     font-size: 14px;
 
     .header {
+      display: flex;
       font-weight: 400;
       .userName {
         color: #515767;
       }
+    }
+
+    .author {
+      background-color: #eaf2ff;
+      color: #1e80ff;
+      margin-left: 5px;
+      font-size: 10px;
     }
 
     .content {
