@@ -25,7 +25,7 @@ export function deleteCommentLike(
 export function publishComment(
   content: string,
   momentId: string,
-  commentId?: string,
+  commentId?: string | null,
   commentToCommentId?: string | null
 ) {
   return fkRequest.post({

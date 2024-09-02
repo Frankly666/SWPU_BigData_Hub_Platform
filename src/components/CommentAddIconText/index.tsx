@@ -23,6 +23,7 @@ import { useAppSelector } from "@/store";
 import { Comment, IMoment } from "@/type/moment";
 import EditComments from "@/base_ui/editComments";
 import CommentList from "../commentList";
+import { publishComment } from "@/service/modules/comment";
 
 interface IProps {
   chidren?: ReactNode;
@@ -36,17 +37,10 @@ const CommentAddIconText: FC<IProps> = ({ item }) => {
   });
   const [showMainNum, setShowMainNum] = useState(3);
   const [allComments, addMainComment] = useState(
-    item.comments.filter((item) => !item.comment_id)
+    item.comments.filter((item) => !item.comment_id && item.id)
   );
 
-  // 用于局部刷新
-  function addMainCommentAction(comment: Comment) {
-    addMainComment((last) => {
-      const tem = [...last];
-      tem.unshift(comment);
-      return tem;
-    });
-  }
+  console.log("allComments: ", allComments);
 
   // 除去子评论的主评论数
   const realCommentCount = useMemo(() => {
@@ -97,6 +91,22 @@ const CommentAddIconText: FC<IProps> = ({ item }) => {
   // 用于初始化展示用户是否点赞
   function userIsExistInList(userIdList: Array<number>): boolean {
     return userIdList?.includes(userId as number);
+  }
+
+  async function handleConfirm(content: string) {
+    const { res } = await publishComment(
+      content,
+      item.moment_id.toString() as string,
+      null,
+      null
+    );
+
+    addMainComment((last) => {
+      const tem = [...last];
+      tem.unshift(res);
+      tem.filter((item) => !item.comment_id && item);
+      return tem;
+    });
   }
 
   return (
@@ -154,6 +164,7 @@ const CommentAddIconText: FC<IProps> = ({ item }) => {
                 minWidth={600}
                 avatarSrc={avatar}
                 avatarSize={40}
+                handleConfirm={handleConfirm}
               />
             </div>
             <div className="commentsList">

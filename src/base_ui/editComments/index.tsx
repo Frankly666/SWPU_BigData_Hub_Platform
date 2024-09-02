@@ -165,9 +165,8 @@ const EditComments: FC<IProps> = ({
           onClick={() => {
             handleConfirm(inputRef.current?.value);
             inputRef.current!.value = "";
-            setIsShowComments(false);
-            closeMessage(false);
-            console.log("closeMessage: ", closeMessage);
+            if (setIsShowComments) setIsShowComments(false);
+            if (closeMessage) closeMessage(false);
           }}
         >
           发送
