@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useRef, useState } from "react";
+import React, { memo, useMemo, useState } from "react";
 import type { FC, ReactNode } from "react";
 import {
   LikeOutlined,
@@ -154,23 +154,10 @@ const CommentAddIconText: FC<IProps> = ({ item }) => {
                     <ShowComments
                       author={item.user_name as string}
                       avatarSize={25}
-                      avatarSrc={term.userAvatar as string}
-                      content={term.content as string}
                       createTime={formatTime(
                         term.createTime?.toString() as string
                       )}
-                      userName={term.user_name as string}
-                      likeCount={
-                        term.commentLike?.likeCount.toString() as string
-                      }
-                      commentId={term.id?.toString() as string}
-                      momentId={term.moment_id?.toString() as string}
-                      commentLikeList={
-                        term.commentLike?.likeUserIdArr as Array<number>
-                      }
-                      commentSonsCount={
-                        term.commentSons?.commentCount.toString() as string
-                      }
+                      commentItem={term}
                     />
                   );
 

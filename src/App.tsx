@@ -79,7 +79,7 @@ const App: FC<IProps> = () => {
               <Content
                 style={{
                   ...contentStyle,
-                  marginLeft: screenWidth > 1190 ? "13.125rem" : "0"
+                  marginLeft: screenWidth > 1190 ? "15%" : "0"
                 }}
               >
                 {useRoutes(routes)}

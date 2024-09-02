@@ -16,6 +16,7 @@ interface IProps {
   avatarSize?: number;
   isShowAvatar?: boolean;
   isAnimation?: boolean;
+  handleConfirm?: any;
 }
 
 const EditComments: FC<IProps> = ({
@@ -24,7 +25,8 @@ const EditComments: FC<IProps> = ({
   minWidth,
   avatarSize,
   isShowAvatar = true,
-  isAnimation = true
+  isAnimation = true,
+  handleConfirm
 }) => {
   const [rightHeight, setRightHeight] = useState("0");
   const [border, setBorder] = useState(isAnimation ? "white" : "#1e80ff");
@@ -33,9 +35,9 @@ const EditComments: FC<IProps> = ({
   const [isSend, setIsSend] = useState(true);
   const [isListenBlur, setIsListenBlur] = useState(true);
   const [openSmile, setOpenSmile] = useState(false);
+  const [selectedImages, setSelectedImages] = useState<Array<File>>([]);
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const [selectedImages, setSelectedImages] = useState<Array<File>>([]);
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     // event.target.files 会返回一个包含所有选中文件的FileList对象
@@ -155,6 +157,9 @@ const EditComments: FC<IProps> = ({
         <button
           disabled={isSend}
           className={classNames({ buttonDisabled: isSend })}
+          onClick={() => {
+            handleConfirm(inputRef.current?.value);
+          }}
         >
           发送
         </button>

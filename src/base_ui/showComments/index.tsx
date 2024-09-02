@@ -3,38 +3,23 @@ import type { FC, ReactNode } from "react";
 
 import ShowCommentsWrapper from "./style";
 import Bottom from "./cpns/bottom";
+import { Comment } from "@/type/moment";
 
 interface IProps {
   children?: ReactNode;
-  avatarSrc: string;
   avatarSize: number;
-  content: string;
   createTime: string;
-  userName: string;
-  likeCount: string;
-  momentId: string;
-  commentId: string;
-  commentLikeList: Array<number>;
-  commentSonsCount: string;
   isSon?: boolean;
-  commentToCommentUserName?: string;
   author: string;
+  commentItem: Comment;
 }
 
 const ShowComments: FC<IProps> = ({
-  avatarSrc,
   avatarSize,
-  content,
   createTime,
-  userName,
-  likeCount,
-  momentId,
-  commentId,
-  commentLikeList,
-  commentSonsCount,
   isSon = false,
-  commentToCommentUserName,
-  author
+  author,
+  commentItem
 }) => {
   const authorLabel = useMemo(() => {
     return <span className="author">作者</span>;
@@ -43,21 +28,23 @@ const ShowComments: FC<IProps> = ({
   return (
     <ShowCommentsWrapper $avatarSize={avatarSize}>
       <div className="left">
-        <img src={avatarSrc} />
+        <img src={commentItem.userAvatar?.toString()} />
       </div>
       <div className="right">
         {isSon ? (
           <>
             <div className="header">
               <div className="content">
-                {userName}
-                {userName === author ? authorLabel : ""}
+                {commentItem.user_name}
+                {commentItem.user_name === author ? authorLabel : ""}
 
-                {commentToCommentUserName
-                  ? " 回复 " + commentToCommentUserName
+                {commentItem.commentToCommentUserName
+                  ? " 回复 " + commentItem.commentToCommentUserName
                   : ""}
-                {commentToCommentUserName === author ? authorLabel : " : "}
-                {content}
+                {commentItem.commentToCommentUserName === author
+                  ? authorLabel
+                  : " : "}
+                {commentItem.content}
               </div>
             </div>
           </>
@@ -65,21 +52,25 @@ const ShowComments: FC<IProps> = ({
           <>
             <div className="header">
               <div className="userName">
-                {userName}
-                {userName === author ? authorLabel : ""}
+                {commentItem.user_name}
+                {commentItem.user_name === author ? authorLabel : ""}
               </div>
               <div className="label"></div>
             </div>
-            <div className="content">{content}</div>
+            <div className="content">{commentItem.content}</div>
           </>
         )}
         <Bottom
           time={createTime}
-          likeCount={likeCount}
-          momentId={momentId}
-          commentId={commentId}
-          commentLikeList={commentLikeList}
-          commentSonsCount={commentSonsCount}
+          likeCount={commentItem.commentLike?.likeCount.toString() as string}
+          momentId={commentItem.moment_id?.toString() as string}
+          commentId={commentItem.comment_id?.toString() as string}
+          commentLikeList={
+            commentItem.commentLike?.likeUserIdArr as Array<number>
+          }
+          commentSonsCount={
+            commentItem.commentSons?.commentCount.toString() as string
+          }
         />
       </div>
     </ShowCommentsWrapper>

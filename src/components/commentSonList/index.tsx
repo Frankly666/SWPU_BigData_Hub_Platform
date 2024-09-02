@@ -22,20 +22,10 @@ const CommentSonList: FC<IProps> = ({ sons, momentAuthor }) => {
         <div className="wrap1" key={index}>
           <ShowComments
             isSon={true}
-            commentToCommentUserName={term.commentToCommentUserName as string}
             author={momentAuthor}
             avatarSize={25}
-            avatarSrc={term.userAvatar as string}
-            content={term.content as string}
             createTime={formatTime(term.createTime?.toString() as string)}
-            userName={term.user_name as string}
-            likeCount={term.commentLike?.likeCount.toString() as string}
-            commentId={term.id?.toString() as string}
-            momentId={term.moment_id?.toString() as string}
-            commentLikeList={term.commentLike?.likeUserIdArr as Array<number>}
-            commentSonsCount={
-              term.commentSons?.commentCount.toString() as string
-            }
+            commentItem={term}
           />
         </div>
       ))}

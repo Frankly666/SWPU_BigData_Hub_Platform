@@ -21,3 +21,20 @@ export function deleteCommentLike(
     params: { userId, momentId, commentId }
   });
 }
+
+export function publishComment(
+  content: string,
+  momentId: string,
+  commentId?: string,
+  commentToCommentId?: string
+) {
+  return fkRequest.post({
+    url: "/comment/publish",
+    data: {
+      content,
+      commentToCommentId,
+      moment_id: momentId,
+      comment_id: commentId
+    }
+  });
+}

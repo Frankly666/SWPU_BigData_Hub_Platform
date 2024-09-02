@@ -9,7 +9,11 @@ import {
 
 import BottomWrapper from "./style";
 import IconText from "@/components/IconText";
-import { addCommentLike, deleteCommentLike } from "@/service/modules/comment";
+import {
+  addCommentLike,
+  deleteCommentLike,
+  publishComment
+} from "@/service/modules/comment";
 import { useAppSelector } from "@/store";
 import EditComments from "@/base_ui/editComments";
 
@@ -60,6 +64,11 @@ const Bottom: FC<IProps> = ({
     return commentLikeList?.includes(userId as number);
   }
 
+  async function handleConfirm(content: string) {
+    const res = await publishComment(content, momentId, commentId);
+    console.log("res: ", res);
+  }
+
   return (
     <BottomWrapper>
       <div className="wrapper1">
@@ -99,6 +108,7 @@ const Bottom: FC<IProps> = ({
           avatarSrc={avatar}
           isShowAvatar={false}
           isAnimation={false}
+          handleConfirm={handleConfirm}
         />
       )}
     </BottomWrapper>
