@@ -8,7 +8,11 @@ import { IFormMessage, IUserAccount } from "@/type/users";
 import { getUserInfo } from "@/service/modules/login";
 import { localCache } from "@/utils/cache";
 import { LOGIN_TOKEN, REMEMBER, USER_ACCOUNT } from "@/global/constant";
-import { changeAvataAction, changeUserIdAction } from "@/store/modules/user";
+import {
+  changeAvataAction,
+  changeUserIdAction,
+  changeUserNameAction
+} from "@/store/modules/user";
 import { useAppDispatch } from "@/store";
 import {
   changeIsLoginAction,
@@ -42,9 +46,11 @@ const LoginForm: FC<IProps> = (props) => {
     const token = res.data?.token;
     const avatar = res.data?.avatar;
     const userId = res.data?.user?.userId;
+    const userName = res.data?.user?.username;
 
     disptch(changeUserIdAction(userId));
     disptch(changeAvataAction(avatar));
+    disptch(changeUserNameAction(username));
 
     if (token === undefined) {
       messageApi.open({

@@ -22,9 +22,7 @@ import {
 import { useAppSelector } from "@/store";
 import { Comment, IMoment } from "@/type/moment";
 import EditComments from "@/base_ui/editComments";
-import ShowComments from "@/base_ui/showComments";
-import { formatTime } from "@/utils/formatData";
-import CommentSonList from "../commentSonList";
+import CommentList from "../commentList";
 
 interface IProps {
   chidren?: ReactNode;
@@ -37,6 +35,18 @@ const CommentAddIconText: FC<IProps> = ({ item }) => {
     return { userId: state.user.userId, avatar: state.user.avatar };
   });
   const [showMainNum, setShowMainNum] = useState(3);
+  const [allComments, addMainComment] = useState(
+    item.comments.filter((item) => !item.comment_id)
+  );
+
+  // 用于局部刷新
+  function addMainCommentAction(comment: Comment) {
+    addMainComment((last) => {
+      const tem = [...last];
+      tem.unshift(comment);
+      return tem;
+    });
+  }
 
   // 除去子评论的主评论数
   const realCommentCount = useMemo(() => {
@@ -48,7 +58,7 @@ const CommentAddIconText: FC<IProps> = ({ item }) => {
   }, [item]);
 
   // 主评论排序
-  item.comments.sort((a, b) => {
+  allComments?.sort((a, b) => {
     const dateA = new Date(a.createTime);
     const dateB = new Date(b.createTime);
     return dateB.getTime() - dateA.getTime();
@@ -147,51 +157,29 @@ const CommentAddIconText: FC<IProps> = ({ item }) => {
               />
             </div>
             <div className="commentsList">
-              {item.comments
-                .slice(0, showMainNum + 1)
-                .map((term: Comment, index) => {
-                  const mainItem = (
-                    <ShowComments
-                      author={item.user_name as string}
-                      avatarSize={25}
-                      createTime={formatTime(
-                        term.createTime?.toString() as string
-                      )}
-                      commentItem={term}
+              {allComments.slice(0, showMainNum).map((term: Comment, index) => {
+                // 找到子评论
+                const sons = item.comments.filter((i) => {
+                  return term.commentSons?.commentIdArr?.includes(i.id);
+                });
+
+                // 按照时间排序, 与主评论不同
+                sons.sort((a, b) => {
+                  const dateA = new Date(a.createTime);
+                  const dateB = new Date(b.createTime);
+                  return dateA.getTime() - dateB.getTime();
+                });
+
+                return (
+                  <div key={index} className="mainComment">
+                    <CommentList
+                      mainComment={term}
+                      sons={sons}
+                      momentAuthor={item.user_name as string}
                     />
-                  );
-
-                  if (term.commentSons && !term.comment_id) {
-                    // 找到子评论
-                    const sons = item.comments.filter((i) => {
-                      return term.commentSons?.commentIdArr?.includes(i.id);
-                    });
-
-                    // 按照时间排序, 与主评论不同
-                    sons.sort((a, b) => {
-                      const dateA = new Date(a.createTime);
-                      const dateB = new Date(b.createTime);
-                      return dateA.getTime() - dateB.getTime();
-                    });
-
-                    return (
-                      <div key={index} className="mainComment">
-                        <div className="top">{mainItem}</div>
-                        <CommentSonList
-                          sons={sons}
-                          momentAuthor={item.user_name as string}
-                        />
-                      </div>
-                    );
-                  } else if (term.id) {
-                    if (term.comment_id) return;
-                    return (
-                      <div key={index} className="mainComment">
-                        {mainItem}
-                      </div>
-                    );
-                  }
-                })}
+                  </div>
+                );
+              })}
               <div className="btn">
                 {showMainNum < parseInt(realCommentCount) && (
                   <Button

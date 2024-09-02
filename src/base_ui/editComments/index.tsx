@@ -17,6 +17,8 @@ interface IProps {
   isShowAvatar?: boolean;
   isAnimation?: boolean;
   handleConfirm?: any;
+  setIsShowComments?: any;
+  closeMessage?: any;
 }
 
 const EditComments: FC<IProps> = ({
@@ -26,7 +28,9 @@ const EditComments: FC<IProps> = ({
   avatarSize,
   isShowAvatar = true,
   isAnimation = true,
-  handleConfirm
+  handleConfirm,
+  setIsShowComments,
+  closeMessage
 }) => {
   const [rightHeight, setRightHeight] = useState("0");
   const [border, setBorder] = useState(isAnimation ? "white" : "#1e80ff");
@@ -59,6 +63,7 @@ const EditComments: FC<IProps> = ({
   useEffect(() => {
     if (!isAnimation) inputRef.current?.focus();
   }, []);
+
   return (
     <EditCommentsWrapper
       $minHeight={minHeight}
@@ -159,6 +164,10 @@ const EditComments: FC<IProps> = ({
           className={classNames({ buttonDisabled: isSend })}
           onClick={() => {
             handleConfirm(inputRef.current?.value);
+            inputRef.current!.value = "";
+            setIsShowComments(false);
+            closeMessage(false);
+            console.log("closeMessage: ", closeMessage);
           }}
         >
           发送

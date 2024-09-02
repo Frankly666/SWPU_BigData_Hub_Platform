@@ -3,11 +3,13 @@ import { createSlice } from "@reduxjs/toolkit";
 interface IState {
   avatar: string;
   userId: number | null;
+  userName: string;
 }
 
 const initialState: IState = {
   avatar: "",
-  userId: null
+  userId: null,
+  userName: ""
 };
 
 const mainSlice = createSlice({
@@ -19,9 +21,13 @@ const mainSlice = createSlice({
     },
     changeUserIdAction(state, { payload }) {
       state.userId = payload;
+    },
+    changeUserNameAction(state, { payload }) {
+      state.userName = payload;
     }
   }
 });
 
-export const { changeAvataAction, changeUserIdAction } = mainSlice.actions;
+export const { changeAvataAction, changeUserIdAction, changeUserNameAction } =
+  mainSlice.actions;
 export default mainSlice.reducer;

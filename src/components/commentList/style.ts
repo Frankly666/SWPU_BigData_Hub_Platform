@@ -1,11 +1,15 @@
 import styled from "styled-components";
 
-const CommentSonListWrapper = styled.div`
-  padding-left: 39px;
-  margin-top: 10px;
-  .wrap1 {
-    margin-top: 8px;
+const CommentListWrapper = styled.div`
+  .sons {
+    padding-left: 39px;
+    margin-top: 10px;
+
+    .wrap1 {
+      margin-top: 8px;
+    }
   }
+
   .more {
     cursor: pointer;
     text-align: left;
@@ -19,4 +23,4 @@ const CommentSonListWrapper = styled.div`
   }
 `;
 
-export default CommentSonListWrapper;
+export default CommentListWrapper;

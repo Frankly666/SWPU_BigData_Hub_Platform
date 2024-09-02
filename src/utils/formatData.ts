@@ -10,6 +10,7 @@ export function formatTime(timeString: string): string {
 
   // 根据时间差选择不同的显示格式
   if (diffInMinutes < 60) {
+    if (diffInMinutes < 1) return `刚刚`;
     return `${diffInMinutes}分钟前`;
   } else if (diffInHours < 24) {
     return `${diffInHours}小时前`;

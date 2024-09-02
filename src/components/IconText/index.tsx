@@ -1,5 +1,11 @@
-import React, { memo, useLayoutEffect, useState } from "react";
-import type { FC, ReactNode } from "react";
+import React, {
+  forwardRef,
+  memo,
+  useImperativeHandle,
+  useLayoutEffect,
+  useState
+} from "react";
+import type { ReactNode } from "react";
 import { Space } from "antd";
 
 import IconTextWrapper from "./style";
@@ -15,7 +21,11 @@ interface IProps {
   isMessage?: boolean;
 }
 
-const IconText: FC<IProps> = (props) => {
+export interface IRefProps {
+  setIsActive: (flag: boolean) => void;
+}
+
+const IconText = forwardRef<IRefProps, IProps>((props, ref) => {
   const {
     icon,
     text,
@@ -32,6 +42,12 @@ const IconText: FC<IProps> = (props) => {
       setIsActive(checkInitIsActive());
     }
   }, []);
+
+  useImperativeHandle(ref, () => ({
+    setIsActive: (flag: boolean) => {
+      setIsActive(flag);
+    }
+  }));
 
   return (
     <IconTextWrapper $isActive={isActive}>
@@ -60,6 +76,6 @@ const IconText: FC<IProps> = (props) => {
       </Space>
     </IconTextWrapper>
   );
-};
+});
 
 export default memo(IconText);

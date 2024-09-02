@@ -26,7 +26,7 @@ export function publishComment(
   content: string,
   momentId: string,
   commentId?: string,
-  commentToCommentId?: string
+  commentToCommentId?: string | null
 ) {
   return fkRequest.post({
     url: "/comment/publish",

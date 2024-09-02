@@ -46,3 +46,5 @@ interface commentSons {
   commentIdArr: Array<null | number>;
   commentCount: number;
 }
+
+export type IAddComment = (comment: Comment) => void;
