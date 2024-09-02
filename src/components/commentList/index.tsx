@@ -15,15 +15,14 @@ interface IProps {
 }
 
 const CommentList: FC<IProps> = ({ sons, momentAuthor, mainComment }) => {
-  const [showNum, setShowNum] = useState(3);
+  const [showNum, setShowNum] = useState(2);
   const [allSons, addSon] = useState(sons);
 
   function addSonComment(comment: Comment) {
     addSon((last) => {
-      console.log("last: ", last);
       const tem = [...last];
-      tem.push(comment);
-      console.log("tem: ", tem);
+      tem.unshift(comment);
+      setShowNum(tem.length);
       return tem;
     });
   }
