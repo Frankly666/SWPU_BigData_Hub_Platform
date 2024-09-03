@@ -33,3 +33,9 @@ export function addMomentFavor(userId: string, momentId: string) {
     params: { userId, momentId }
   });
 }
+
+export function deleteMoment(momentId: number) {
+  return fkRequest.get({
+    url: `/moment/delete/${momentId}`
+  });
+}

@@ -40,8 +40,6 @@ const CommentAddIconText: FC<IProps> = ({ item }) => {
     item.comments.filter((item) => !item.comment_id && item.id)
   );
 
-  console.log("allComments: ", allComments);
-
   // 主评论排序
   allComments?.sort((a, b) => {
     const dateA = new Date(a.createTime);

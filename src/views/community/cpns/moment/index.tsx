@@ -1,13 +1,15 @@
 import React, { memo, useState, useEffect } from "react";
 import type { FC, ReactNode } from "react";
-import { Avatar, List } from "antd";
+import { Avatar, List, Popconfirm, message } from "antd";
+import { DeleteTwoTone, QuestionCircleOutlined } from "@ant-design/icons";
 
 import MomentWrapper from "./style";
 import { IMoment } from "@/type/moment";
-import { getMoments } from "@/service/modules/moment";
+import { deleteMoment, getMoments } from "@/service/modules/moment";
 import { formatTime } from "@/utils/formatData";
 import LabelAndTimeDesc from "@/components/labelAndTimeDesc";
 import CommentAddIconText from "@/components/commentAddIconText";
+import { useAppSelector } from "@/store";
 
 interface IProps {
   children?: ReactNode;
@@ -16,6 +18,12 @@ interface IProps {
 const Moment: FC<IProps> = () => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<Array<IMoment>>([]);
+  const [messageApi, contextHolder] = message.useMessage();
+  const { userId } = useAppSelector((state) => {
+    return {
+      userId: state.user.userId
+    };
+  });
 
   useEffect(() => {
     loadMomentData();
@@ -34,8 +42,23 @@ const Moment: FC<IProps> = () => {
     }
   }
 
+  // 删除动态的操作
+  async function handleDeleteMoment(momentId: number) {
+    await deleteMoment(momentId);
+
+    messageApi.open({
+      type: "success",
+      content: "成功删除动态!"
+    });
+
+    setData((last) => {
+      return last.filter((item) => item.moment_id !== momentId);
+    });
+  }
+
   return (
     <MomentWrapper>
+      {contextHolder}
       <List
         loading={loading}
         dataSource={data}
@@ -55,8 +78,25 @@ const Moment: FC<IProps> = () => {
                 />
               }
             />
-
-            <div className="moment_content">{item.content}</div>
+            <div className="content">
+              <div className="moment_content">{item.content}</div>
+            </div>
+            {item.user_id === userId && (
+              <div className="delete">
+                <Popconfirm
+                  title="delete"
+                  description="你确定删除此条评论吗?"
+                  icon={<QuestionCircleOutlined style={{ color: "red" }} />}
+                  okText="确认"
+                  cancelText="取消"
+                  onConfirm={() => {
+                    handleDeleteMoment(item.moment_id);
+                  }}
+                >
+                  <DeleteTwoTone />
+                </Popconfirm>
+              </div>
+            )}
             {/* <img src="" alt="" /> */}
           </List.Item>
         )}
