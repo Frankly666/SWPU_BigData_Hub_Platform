@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useState } from "react";
+import React, { memo, useState } from "react";
 import type { FC, ReactNode } from "react";
 import {
   LikeOutlined,
@@ -41,15 +41,6 @@ const CommentAddIconText: FC<IProps> = ({ item }) => {
   );
 
   console.log("allComments: ", allComments);
-
-  // 除去子评论的主评论数
-  const realCommentCount = useMemo(() => {
-    let cnt = 0;
-    item.comments.forEach((term) => {
-      if (!term.comment_id && term.id) cnt++;
-    });
-    return cnt.toString();
-  }, [item]);
 
   // 主评论排序
   allComments?.sort((a, b) => {
@@ -150,14 +141,14 @@ const CommentAddIconText: FC<IProps> = ({ item }) => {
           <IconText
             icon={MessageOutlined}
             activeIcon={MessageFilled}
-            text={realCommentCount}
+            text={allComments.length.toString()}
             key="list-vertical-message"
             setIsShowComments={setIsShowComments}
           />
         </div>
         {isShowComments && (
           <div className="comments">
-            <div className="header">评论 {realCommentCount}</div>
+            <div className="header">评论 {allComments.length.toString()}</div>
             <div className="write_comment_area">
               <EditComments
                 minHeight={90}
@@ -192,7 +183,7 @@ const CommentAddIconText: FC<IProps> = ({ item }) => {
                 );
               })}
               <div className="btn">
-                {showMainNum < parseInt(realCommentCount) && (
+                {showMainNum < parseInt(allComments.length.toString()) && (
                   <Button
                     block
                     onClick={() => {
@@ -201,7 +192,7 @@ const CommentAddIconText: FC<IProps> = ({ item }) => {
                       // 跳转至完整的详情页
                     }}
                   >
-                    查看全部 {realCommentCount} 条评论
+                    查看全部 {allComments.length.toString()} 条评论
                     {showMainNum < 15 && <DownOutlined />}
                   </Button>
                 )}

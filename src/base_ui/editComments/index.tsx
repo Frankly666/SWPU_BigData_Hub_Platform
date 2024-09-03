@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useRef, useState } from "react";
 import type { FC, ReactNode } from "react";
 import { SmileOutlined } from "@ant-design/icons";
-import { Popover } from "antd";
+import { Popover, message } from "antd";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 
@@ -39,26 +39,27 @@ const EditComments: FC<IProps> = ({
   const [isSend, setIsSend] = useState(true);
   const [isListenBlur, setIsListenBlur] = useState(true);
   const [openSmile, setOpenSmile] = useState(false);
-  const [selectedImages, setSelectedImages] = useState<Array<File>>([]);
+  // const [selectedImages, setSelectedImages] = useState<Array<File>>([]);
+  const [messageApi, contextHolder] = message.useMessage();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // event.target.files 会返回一个包含所有选中文件的FileList对象
-    const files: FileList = event.target.files as FileList;
+  // const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   // event.target.files 会返回一个包含所有选中文件的FileList对象
+  //   const files: FileList = event.target.files as FileList;
 
-    // 检查files是否为null
-    if (files) {
-      // 将FileList转换为File数组
-      const images: File[] = Array.from(files).filter((file) => {
-        // 过滤出图片文件
-        return file.type.match(/image.*/);
-      });
+  //   // 检查files是否为null
+  //   if (files) {
+  //     // 将FileList转换为File数组
+  //     const images: File[] = Array.from(files).filter((file) => {
+  //       // 过滤出图片文件
+  //       return file.type.match(/image.*/);
+  //     });
 
-      // 更新状态以存储选中的图片文件
-      setSelectedImages(images);
-    }
-  };
+  //     // 更新状态以存储选中的图片文件
+  //     setSelectedImages(images);
+  //   }
+  // };
 
   useEffect(() => {
     if (!isAnimation) inputRef.current?.focus();
@@ -70,6 +71,7 @@ const EditComments: FC<IProps> = ({
       $minWidth={minWidth}
       $avatarSize={avatarSize}
     >
+      {contextHolder}
       {isShowAvatar && (
         <div className="left">
           <img src={avatarSrc} />
@@ -82,7 +84,7 @@ const EditComments: FC<IProps> = ({
           borderColor: border,
           backgroundColor: bgc
         }}
-        onClick={(e) => {
+        onClick={() => {
           inputRef.current?.focus();
         }}
         onMouseEnter={() => {
@@ -103,7 +105,7 @@ const EditComments: FC<IProps> = ({
             setBorder("#1e80ff");
             setIsListen(false);
           }}
-          onBlur={(e) => {
+          onBlur={() => {
             if (!isAnimation) return;
             if (!isListenBlur) return;
             setRightHeight("0");
@@ -167,6 +169,12 @@ const EditComments: FC<IProps> = ({
             inputRef.current!.value = "";
             if (setIsShowComments) setIsShowComments(false);
             if (closeMessage) closeMessage(false);
+            else {
+              messageApi.open({
+                type: "success",
+                content: "评论成功!"
+              });
+            }
           }}
         >
           发送
