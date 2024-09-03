@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import React, { memo, useMemo, useState } from "react";
 import type { FC, ReactNode } from "react";
 import {
   LikeOutlined,
@@ -36,9 +36,13 @@ const CommentAddIconText: FC<IProps> = ({ item }) => {
     return { userId: state.user.userId, avatar: state.user.avatar };
   });
   const [showMainNum, setShowMainNum] = useState(3);
-  const [allComments, addMainComment] = useState(
-    item.comments.filter((item) => !item.comment_id && item.id)
-  );
+  const [allComments, setAllComments] = useState(item.comments);
+
+  const mainLength = useMemo(() => {
+    return allComments
+      .filter((item) => !item.comment_id && item.id)
+      .length.toString();
+  }, [allComments]);
 
   // 主评论排序
   allComments?.sort((a, b) => {
@@ -82,6 +86,7 @@ const CommentAddIconText: FC<IProps> = ({ item }) => {
     return userIdList?.includes(userId as number);
   }
 
+  // 输入框点击确认后的操作
   async function handleConfirm(content: string) {
     const { res } = await publishComment(
       content,
@@ -90,10 +95,9 @@ const CommentAddIconText: FC<IProps> = ({ item }) => {
       null
     );
 
-    addMainComment((last) => {
+    setAllComments((last) => {
       const tem = [...last];
       tem.unshift(res);
-      tem.filter((item) => !item.comment_id && item);
       return tem;
     });
   }
@@ -139,14 +143,14 @@ const CommentAddIconText: FC<IProps> = ({ item }) => {
           <IconText
             icon={MessageOutlined}
             activeIcon={MessageFilled}
-            text={allComments.length.toString()}
+            text={mainLength}
             key="list-vertical-message"
             setIsShowComments={setIsShowComments}
           />
         </div>
         {isShowComments && (
           <div className="comments">
-            <div className="header">评论 {allComments.length.toString()}</div>
+            <div className="header">评论 {mainLength}</div>
             <div className="write_comment_area">
               <EditComments
                 minHeight={90}
@@ -157,31 +161,23 @@ const CommentAddIconText: FC<IProps> = ({ item }) => {
               />
             </div>
             <div className="commentsList">
-              {allComments.slice(0, showMainNum).map((term: Comment, index) => {
-                // 找到子评论
-                const sons = item.comments.filter((i) => {
-                  return term.commentSons?.commentIdArr?.includes(i.id);
-                });
-
-                // 按照时间排序, 与主评论不同
-                sons.sort((a, b) => {
-                  const dateA = new Date(a.createTime);
-                  const dateB = new Date(b.createTime);
-                  return dateA.getTime() - dateB.getTime();
-                });
-
-                return (
-                  <div key={index} className="mainComment">
-                    <CommentList
-                      mainComment={term}
-                      sons={sons}
-                      momentAuthor={item.user_name as string}
-                    />
-                  </div>
-                );
-              })}
+              {allComments
+                .filter((item) => !item.comment_id && item.id)
+                .slice(0, showMainNum)
+                .map((term: Comment, index) => {
+                  return (
+                    <div key={index} className="mainComment">
+                      <CommentList
+                        mainComment={term}
+                        setAllComments={setAllComments}
+                        allComments={allComments}
+                        momentAuthor={item.user_name as string}
+                      />
+                    </div>
+                  );
+                })}
               <div className="btn">
-                {showMainNum < parseInt(allComments.length.toString()) && (
+                {showMainNum < parseInt(mainLength) && (
                   <Button
                     block
                     onClick={() => {
@@ -190,7 +186,7 @@ const CommentAddIconText: FC<IProps> = ({ item }) => {
                       // 跳转至完整的详情页
                     }}
                   >
-                    查看全部 {allComments.length.toString()} 条评论
+                    查看全部 {mainLength} 条评论
                     {showMainNum < 15 && <DownOutlined />}
                   </Button>
                 )}

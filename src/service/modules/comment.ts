@@ -38,3 +38,9 @@ export function publishComment(
     }
   });
 }
+
+export function deleteComment(commentId: number) {
+  return fkRequest.get({
+    url: `/comment/delete/${commentId}`
+  });
+}

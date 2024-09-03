@@ -3,7 +3,7 @@ import type { FC, ReactNode } from "react";
 
 import ShowCommentsWrapper from "./style";
 import Bottom from "./cpns/bottom";
-import { Comment, IAddComment } from "@/type/moment";
+import { Comment, IAddComment, IDeleteFoo } from "@/type/moment";
 
 interface IProps {
   children?: ReactNode;
@@ -13,6 +13,7 @@ interface IProps {
   author: string;
   commentItem: Comment;
   addSonComment: IAddComment; // 局部刷新刚刚发表的动态的函数
+  deleteComment: IDeleteFoo;
 }
 
 const ShowComments: FC<IProps> = ({
@@ -21,7 +22,8 @@ const ShowComments: FC<IProps> = ({
   isSon = false,
   author,
   commentItem,
-  addSonComment
+  addSonComment,
+  deleteComment
 }) => {
   const authorLabel = useMemo(() => {
     return <span className="author">作者</span>;
@@ -66,6 +68,7 @@ const ShowComments: FC<IProps> = ({
           time={createTime}
           addSonComment={addSonComment}
           commentItem={commentItem}
+          deleteComment={deleteComment}
         />
       </div>
     </ShowCommentsWrapper>

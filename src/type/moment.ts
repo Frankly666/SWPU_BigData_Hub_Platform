@@ -13,7 +13,7 @@ export interface IMoment {
 }
 
 export interface Comment {
-  id: number | null;
+  id: number;
   content: null | string;
   user_id: number | null;
   moment_id: number | null;
@@ -48,3 +48,4 @@ interface commentSons {
 }
 
 export type IAddComment = (comment: Comment) => void;
+export type IDeleteFoo = (id: number) => void;

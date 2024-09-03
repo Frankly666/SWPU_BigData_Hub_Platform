@@ -1,20 +1,27 @@
 import styled from "styled-components";
 
 const BottomWrapper = styled.div`
+  width: 100%;
   .wrapper1 {
+    position: relative;
     display: flex;
-    justify-content: space-between;
     margin-top: 4px;
-    width: 200px;
+    width: 100%;
   }
   .time {
     font-size: 12px;
+    margin-right: 29px;
   }
   .main {
     display: flex;
     flex-direction: column;
     .icon {
       display: flex;
+    }
+
+    .delete {
+      position: absolute;
+      right: 0;
     }
   }
 `;

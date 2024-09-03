@@ -24,6 +24,7 @@ const ShowCommentsWrapper = styled.div<IStyled>`
     display: flex;
     flex-direction: column;
     font-size: 14px;
+    width: 100%;
 
     .header {
       display: flex;
