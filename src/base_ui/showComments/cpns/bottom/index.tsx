@@ -106,49 +106,47 @@ const Bottom: FC<IProps> = ({
     <BottomWrapper>
       <div className="wrapper1">
         <div className="time">{time}</div>
-        <div className="main">
-          <div className="icon">
-            <IconText
-              icon={LikeOutlined}
-              activeIcon={LikeFilled}
-              text={
-                (commentItem.commentLike?.likeCount.toString() as string) || "0"
-              }
-              clickFn={(isActive) => {
-                return handleIconClick(
-                  commentItem.commentLike?.likeUserIdArr as Array<number>,
-                  isActive,
-                  userId?.toString() as string,
-                  commentItem.moment_id?.toString() as string,
-                  commentItem.id?.toString() as string
-                );
-              }}
-              checkInitIsActive={() => {
-                return userIsExistInList(
-                  commentItem.commentLike?.likeUserIdArr as Array<number>
-                );
-              }}
-            />
-            <div className="space" style={{ width: "25px" }}></div>
-            <IconText
-              icon={MessageOutlined}
-              activeIcon={MessageFilled}
-              text={
-                (commentItem.commentSons?.commentCount.toString() as string) ||
-                "0"
-              }
-              setIsShowComments={setIsShowComments}
-              ref={messageIconRef}
-            />
-          </div>
-          {userId === commentItem.user_id && (
-            <div className="delete">
-              <Dropdown menu={{ items }} placement="bottom" arrow>
-                <DashOutlined />
-              </Dropdown>
-            </div>
-          )}
+        <div className="icon">
+          <IconText
+            icon={LikeOutlined}
+            activeIcon={LikeFilled}
+            text={
+              (commentItem.commentLike?.likeCount.toString() as string) || "0"
+            }
+            clickFn={(isActive) => {
+              return handleIconClick(
+                commentItem.commentLike?.likeUserIdArr as Array<number>,
+                isActive,
+                userId?.toString() as string,
+                commentItem.moment_id?.toString() as string,
+                commentItem.id?.toString() as string
+              );
+            }}
+            checkInitIsActive={() => {
+              return userIsExistInList(
+                commentItem.commentLike?.likeUserIdArr as Array<number>
+              );
+            }}
+          />
+          <IconText
+            icon={MessageOutlined}
+            activeIcon={MessageFilled}
+            text={
+              commentItem.commentSons
+                ? (commentItem.commentSons?.commentCount.toString() as string)
+                : "回复"
+            }
+            setIsShowComments={setIsShowComments}
+            ref={messageIconRef}
+          />
         </div>
+        {userId === commentItem.user_id && (
+          <div className="delete">
+            <Dropdown menu={{ items }} placement="bottom" arrow>
+              <DashOutlined />
+            </Dropdown>
+          </div>
+        )}
       </div>
       {isShowComments && (
         <EditComments

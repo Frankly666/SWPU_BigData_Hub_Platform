@@ -7,16 +7,17 @@ const BottomWrapper = styled.div`
     display: flex;
     margin-top: 4px;
     width: 100%;
-  }
-  .time {
-    font-size: 12px;
-    margin-right: 29px;
-  }
-  .main {
-    display: flex;
-    flex-direction: column;
+
+    .time {
+      font-size: 12px;
+      margin-right: 29px;
+    }
+
     .icon {
       display: flex;
+      position: absolute;
+      left: 10%;
+      width: 160px;
     }
 
     .delete {
