@@ -1,4 +1,4 @@
-import React, { memo, useMemo, useState } from "react";
+import React, { memo, useEffect, useMemo, useRef, useState } from "react";
 import type { FC, ReactNode } from "react";
 import {
   LikeOutlined,
@@ -12,7 +12,7 @@ import {
 import { Button } from "antd";
 
 import CommentAddIconTextWrapper from "./style";
-import IconText from "../IconText";
+import IconText, { IRefProps } from "../IconText";
 import {
   addMomentFavor,
   addMomentLike,
@@ -37,6 +37,7 @@ const CommentAddIconText: FC<IProps> = ({ item }) => {
   });
   const [showMainNum, setShowMainNum] = useState(3);
   const [allComments, setAllComments] = useState(item.comments);
+  const textRef = useRef<IRefProps>(null);
 
   const mainLength = useMemo(() => {
     return allComments
@@ -86,7 +87,7 @@ const CommentAddIconText: FC<IProps> = ({ item }) => {
     return userIdList?.includes(userId as number);
   }
 
-  // 输入框点击确认后的操作
+  // 输入框点击确认后的操作, 这是对主评论的操作
   async function handleConfirm(content: string) {
     const { res } = await publishComment(
       content,
@@ -96,11 +97,13 @@ const CommentAddIconText: FC<IProps> = ({ item }) => {
     );
 
     setAllComments((last) => {
-      const tem = [...last];
-      tem.unshift(res);
-      return tem;
+      return [...last, res];
     });
   }
+
+  useEffect(() => {
+    textRef.current?.changeText(mainLength);
+  }, [allComments]);
 
   return (
     <CommentAddIconTextWrapper>
@@ -146,6 +149,7 @@ const CommentAddIconText: FC<IProps> = ({ item }) => {
             text={mainLength}
             key="list-vertical-message"
             setIsShowComments={setIsShowComments}
+            ref={textRef}
           />
         </div>
         {isShowComments && (

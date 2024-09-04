@@ -42,6 +42,7 @@ const CommentList: FC<IProps> = ({
   }, [allComments, mainComment]);
 
   function addSonComment(comment: Comment) {
+    setShowNum(allSons.length + 1);
     setAllComments((last) => [...last, comment]);
   }
 

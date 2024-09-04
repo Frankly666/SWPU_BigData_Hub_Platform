@@ -23,6 +23,7 @@ interface IProps {
 
 export interface IRefProps {
   setIsActive: (flag: boolean) => void;
+  changeText: (text: string) => void;
 }
 
 const IconText = forwardRef<IRefProps, IProps>((props, ref) => {
@@ -46,6 +47,9 @@ const IconText = forwardRef<IRefProps, IProps>((props, ref) => {
   useImperativeHandle(ref, () => ({
     setIsActive: (flag: boolean) => {
       setIsActive(flag);
+    },
+    changeText: (text: string) => {
+      setTextVar(text);
     }
   }));
 
