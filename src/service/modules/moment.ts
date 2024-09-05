@@ -8,14 +8,14 @@ export function getMoments() {
 
 export function deleteMomentLike(userId: string, momentId: string) {
   return fkRequest.get({
-    url: "/moment/delete/moment_like",
+    url: "/moment/drop/moment_like",
     params: { userId, momentId }
   });
 }
 
 export function deleteMomentFavor(userId: string, momentId: string) {
   return fkRequest.get({
-    url: "/moment/delete/moment_favor",
+    url: "/moment/drop/moment_favor",
     params: { userId, momentId }
   });
 }

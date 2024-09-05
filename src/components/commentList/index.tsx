@@ -1,4 +1,4 @@
-import React, { memo, useEffect, useMemo, useState } from "react";
+import React, { memo, useLayoutEffect, useMemo, useState } from "react";
 import type { FC, ReactNode } from "react";
 import { DownOutlined } from "@ant-design/icons";
 import { message } from "antd";
@@ -27,7 +27,7 @@ const CommentList: FC<IProps> = ({
   const [showNum, setShowNum] = useState(2);
   const [allSons, setSon] = useState<Array<Comment>>([]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setSon(
       allComments
         .filter((i) => {
@@ -47,17 +47,11 @@ const CommentList: FC<IProps> = ({
   }
 
   // 删除评论的操作
-  async function handleDleteComment(commentId: number) {
-    await deleteComment(commentId);
-    if (mainComment.id === commentId) {
-      setAllComments((last) => {
-        return last.filter((item) => item.id !== commentId);
-      });
-    } else {
-      setSon((last) => {
-        return last.filter((item) => item.id !== commentId);
-      });
-    }
+  function handleDleteComment(commentId: number) {
+    deleteComment(commentId);
+    setAllComments((last) => {
+      return last.filter((item) => item.id !== commentId);
+    });
 
     messageApi.open({
       type: "success",
@@ -80,7 +74,7 @@ const CommentList: FC<IProps> = ({
       </div>
       <div className="sons">
         {allSons.slice(0, showNum).map((term, index) => (
-          <div className="wrap1" key={index}>
+          <div className="wrap1" key={mainComment.id}>
             <ShowComments
               isSon={true}
               author={momentAuthor}
@@ -89,6 +83,7 @@ const CommentList: FC<IProps> = ({
               commentItem={term}
               addSonComment={addSonComment}
               deleteComment={handleDleteComment}
+              mainComment={mainComment}
             />
           </div>
         ))}

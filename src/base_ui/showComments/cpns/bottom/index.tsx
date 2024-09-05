@@ -1,4 +1,4 @@
-import React, { memo, useRef, useState } from "react";
+import React, { memo, useMemo, useRef, useState } from "react";
 import type { FC, ReactNode } from "react";
 import {
   LikeOutlined,
@@ -27,13 +27,15 @@ interface IProps {
   addSonComment: IAddComment;
   commentItem: Comment;
   deleteComment: IDeleteFoo;
+  mainComment?: Comment;
 }
 
 const Bottom: FC<IProps> = ({
   time,
   commentItem,
   addSonComment,
-  deleteComment
+  deleteComment,
+  mainComment
 }) => {
   const { userId, avatar } = useAppSelector((state) => {
     return {
@@ -71,10 +73,17 @@ const Bottom: FC<IProps> = ({
     if (isActive) {
       // 向后端发送删除请求
       await deleteCommentLike(userId, momentId, commentId);
+      commentItem.commentLike!.likeUserIdArr =
+        commentItem.commentLike!.likeUserIdArr.filter(
+          (item) => item !== parseInt(userId)
+        );
 
+      commentItem.commentLike!.likeCount--;
       return false;
     }
     await addCommentLike(userId, momentId, commentId);
+    commentItem.commentLike?.likeUserIdArr.push(parseInt(userId));
+    commentItem.commentLike!.likeCount++;
 
     return true;
   }
@@ -84,6 +93,7 @@ const Bottom: FC<IProps> = ({
     return commentLikeList?.includes(userId as number);
   }
 
+  // 子评论点击提交
   async function handleConfirm(content: string) {
     const commentToCommentId = commentItem.comment_id
       ? commentItem.id?.toString()
@@ -100,46 +110,50 @@ const Bottom: FC<IProps> = ({
     );
 
     addSonComment(res);
+    messageIconRef.current?.changeText("回复");
   }
+
+  const icons = useMemo(
+    () => (
+      <>
+        <IconText
+          icon={LikeOutlined}
+          activeIcon={LikeFilled}
+          text={
+            (commentItem.commentLike?.likeCount.toString() as string) || "0"
+          }
+          clickFn={(isActive) => {
+            return handleIconClick(
+              commentItem.commentLike?.likeUserIdArr as Array<number>,
+              isActive,
+              userId?.toString() as string,
+              commentItem.moment_id?.toString() as string,
+              commentItem.id?.toString() as string
+            );
+          }}
+          checkInitIsActive={() => {
+            return userIsExistInList(
+              commentItem.commentLike?.likeUserIdArr as Array<number>
+            );
+          }}
+        />
+        <IconText
+          icon={MessageOutlined}
+          activeIcon={MessageFilled}
+          text={"回复"}
+          setIsShowComments={setIsShowComments}
+          ref={messageIconRef}
+        />
+      </>
+    ),
+    [commentItem]
+  );
 
   return (
     <BottomWrapper>
       <div className="wrapper1">
         <div className="time">{time}</div>
-        <div className="icon">
-          <IconText
-            icon={LikeOutlined}
-            activeIcon={LikeFilled}
-            text={
-              (commentItem.commentLike?.likeCount.toString() as string) || "0"
-            }
-            clickFn={(isActive) => {
-              return handleIconClick(
-                commentItem.commentLike?.likeUserIdArr as Array<number>,
-                isActive,
-                userId?.toString() as string,
-                commentItem.moment_id?.toString() as string,
-                commentItem.id?.toString() as string
-              );
-            }}
-            checkInitIsActive={() => {
-              return userIsExistInList(
-                commentItem.commentLike?.likeUserIdArr as Array<number>
-              );
-            }}
-          />
-          <IconText
-            icon={MessageOutlined}
-            activeIcon={MessageFilled}
-            text={
-              commentItem.commentSons
-                ? (commentItem.commentSons?.commentCount.toString() as string)
-                : "回复"
-            }
-            setIsShowComments={setIsShowComments}
-            ref={messageIconRef}
-          />
-        </div>
+        <div className="icon">{icons}</div>
         {userId === commentItem.user_id && (
           <div className="delete">
             <Dropdown menu={{ items }} placement="bottom" arrow>

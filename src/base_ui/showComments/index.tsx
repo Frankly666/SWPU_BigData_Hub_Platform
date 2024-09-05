@@ -14,6 +14,7 @@ interface IProps {
   commentItem: Comment;
   addSonComment: IAddComment; // 局部刷新刚刚发表的动态的函数
   deleteComment: IDeleteFoo;
+  mainComment?: Comment;
 }
 
 const ShowComments: FC<IProps> = ({
@@ -23,7 +24,8 @@ const ShowComments: FC<IProps> = ({
   author,
   commentItem,
   addSonComment,
-  deleteComment
+  deleteComment,
+  mainComment
 }) => {
   const authorLabel = useMemo(() => {
     return <span className="author">作者</span>;
@@ -69,6 +71,8 @@ const ShowComments: FC<IProps> = ({
           addSonComment={addSonComment}
           commentItem={commentItem}
           deleteComment={deleteComment}
+          mainComment={mainComment}
+          key={commentItem.id}
         />
       </div>
     </ShowCommentsWrapper>

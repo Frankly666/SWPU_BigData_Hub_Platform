@@ -33,7 +33,6 @@ const App: FC<IProps> = () => {
   });
   const [screenWidth, setScreenWidth] = useState(window.innerWidth);
   useScreenWidthListener((width) => {
-    console.log("width: ", width);
     setScreenWidth(width);
   });
 

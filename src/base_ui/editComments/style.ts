@@ -8,6 +8,7 @@ interface IStyled {
 const EditCommentsWrapper = styled.div<IStyled>`
   display: flex;
   height: 100%;
+  margin-top: 10px;
 
   .left {
     margin-right: 20px;

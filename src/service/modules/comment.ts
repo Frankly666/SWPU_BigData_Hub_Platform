@@ -17,7 +17,7 @@ export function deleteCommentLike(
   commentId: string
 ) {
   return fkRequest.get({
-    url: `/comment/delete/comment_like`,
+    url: `/comment/drop/comment_like`,
     params: { userId, momentId, commentId }
   });
 }

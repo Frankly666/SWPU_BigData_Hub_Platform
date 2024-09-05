@@ -68,6 +68,13 @@ const IconText = forwardRef<IRefProps, IProps>((props, ref) => {
             });
           } else {
             setIsShowComments(!isActive);
+            setTextVar((last) => {
+              if (last === "回复" || last === "取消回复") {
+                return last === "回复" ? "取消回复" : "回复";
+              } else {
+                return last;
+              }
+            });
             setIsActive((last) => !last);
           }
         }}

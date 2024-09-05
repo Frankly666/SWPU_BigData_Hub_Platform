@@ -16,7 +16,7 @@ interface IProps {
   avatarSize?: number;
   isShowAvatar?: boolean;
   isAnimation?: boolean;
-  handleConfirm?: any;
+  handleConfirm?: (content: string) => Promise<void>;
   setIsShowComments?: any;
   closeMessage?: any;
 }
@@ -165,7 +165,7 @@ const EditComments: FC<IProps> = ({
           disabled={isSend}
           className={classNames({ buttonDisabled: isSend })}
           onClick={() => {
-            handleConfirm(inputRef.current?.value);
+            if (handleConfirm) handleConfirm(inputRef.current?.value as string);
             inputRef.current!.value = "";
             if (setIsShowComments) setIsShowComments(false);
             if (closeMessage) closeMessage(false);
