@@ -19,6 +19,7 @@ interface IProps {
   handleConfirm?: (content: string) => Promise<void>;
   setIsShowComments?: any;
   closeMessage?: any;
+  buttonText?: string;
 }
 
 const EditComments: FC<IProps> = ({
@@ -30,7 +31,8 @@ const EditComments: FC<IProps> = ({
   isAnimation = true,
   handleConfirm,
   setIsShowComments,
-  closeMessage
+  closeMessage,
+  buttonText
 }) => {
   const [rightHeight, setRightHeight] = useState("0");
   const [border, setBorder] = useState(isAnimation ? "white" : "#1e80ff");
@@ -42,7 +44,7 @@ const EditComments: FC<IProps> = ({
   // const [selectedImages, setSelectedImages] = useState<Array<File>>([]);
   const [messageApi, contextHolder] = message.useMessage();
 
-  const inputRef = useRef<HTMLInputElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
 
   // const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
   //   // event.target.files 会返回一个包含所有选中文件的FileList对象
@@ -96,7 +98,10 @@ const EditComments: FC<IProps> = ({
           setIsListenBlur(true);
         }}
       >
-        <input
+        <textarea
+          style={{
+            height: !isAnimation && minHeight ? minHeight * 0.7 + "px" : "160px"
+          }}
           ref={inputRef}
           onFocus={() => {
             if (!isAnimation) return;
@@ -122,7 +127,7 @@ const EditComments: FC<IProps> = ({
             }
           }}
           placeholder="友善交流"
-        ></input>
+        ></textarea>
         <div className="smile">
           <Popover
             placement="top"
@@ -177,7 +182,7 @@ const EditComments: FC<IProps> = ({
             }
           }}
         >
-          发送
+          {buttonText ?? "发送"}
         </button>
       </div>
     </EditCommentsWrapper>

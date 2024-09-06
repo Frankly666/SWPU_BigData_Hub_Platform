@@ -261,7 +261,7 @@ const EnrollForm: FC<IProps> = ({ setEnrollOpen, setLoginOpen }) => {
         <Form.Item
           name="avatar"
           label="头像上传"
-          tooltip="请完整填写完必填信息后上传, 且上传后请勿修改以上信息, 若未上传则使用默认头像"
+          tooltip="请完整填写完必填信息后上传"
           rules={[{ required: false, message: "Please input Intro" }]}
         >
           <Upload

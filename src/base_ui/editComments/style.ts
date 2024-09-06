@@ -31,13 +31,14 @@ const EditCommentsWrapper = styled.div<IStyled>`
       height 0.4s ease; /* 过渡效果 */
     border: 1px solid red;
 
-    input {
+    textarea {
       border: none; /* 无边框 */
       background-color: transparent; /* 初始背景颜色 */
       padding: 8px 15px; /* 内边距 */
       font-size: 14px; /* 字体大小 */
       width: 100%; /* 宽度 */
-      height: 40px;
+      overflow: hidden;
+      min-height: ${(props) => props.$minHeight};
       transition:
         background-color 0.3s ease,
         height 0.3s ease; /* 过渡效果 */

@@ -14,6 +14,7 @@ import { changeTagNameAction } from "@/store/modules/main";
 import Moment from "./cpns/moment";
 import Essay from "./cpns/essay";
 import PublishMoment from "../publishMoment";
+import EditComments from "@/base_ui/editComments";
 
 interface IProps {
   children?: ReactNode;
@@ -22,9 +23,10 @@ interface IProps {
 const Community: FC<IProps> = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const { isLogin } = useAppSelector((state) => {
+  const { isLogin, avatar } = useAppSelector((state) => {
     return {
-      isLogin: state.main.isLogin
+      isLogin: state.main.isLogin,
+      avatar: state.user.avatar
     };
   });
   const items = useMemo(
@@ -46,6 +48,7 @@ const Community: FC<IProps> = () => {
   );
   const [isShowPublish, setIsShowPublish] = useState(false);
   const [isMoment, setIsMoment] = useState(true);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // 路由守卫
   useLayoutEffect(() => {
@@ -61,12 +64,39 @@ const Community: FC<IProps> = () => {
   }, []);
 
   function handlePublish() {
-    if (isMoment) navigate("/publishMoment");
+    if (isMoment) showModal();
     else navigate("/editEssay");
   }
 
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <CommunityWrapper>
+      <Modal
+        open={isModalOpen}
+        onOk={handleOk}
+        onCancel={handleCancel}
+        footer={null}
+        width={690}
+        maskClosable={false}
+      >
+        <EditComments
+          minHeight={200}
+          isAnimation={false}
+          isShowAvatar={false}
+          buttonText="发布"
+        />
+      </Modal>
       <Tabs
         defaultActiveKey="1"
         items={items}

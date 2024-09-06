@@ -44,6 +44,10 @@ const CommentList: FC<IProps> = ({
   function addSonComment(comment: Comment) {
     setShowNum(allSons.length + 1);
     setAllComments((last) => [...last, comment]);
+    messageApi.open({
+      type: "success",
+      content: "回复成功!"
+    });
   }
 
   // 删除评论的操作
