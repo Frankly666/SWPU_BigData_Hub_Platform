@@ -15,17 +15,17 @@ const MomentWrapper = styled.div`
     padding: 0 3.875rem;
   }
 
-  :where(.css-dev-only-do-not-override-11lehqq).ant-list-split .ant-list-item {
+  :where(.ant-list-split) .ant-list-item {
     border-block-end: 7.6px solid rgba(5, 5, 5, 0.06);
   }
 
   /* 头像调整 */
-  :where(.css-dev-only-do-not-override-11lehqq).ant-avatar {
+  :where(.ant-avatar) {
     width: 3rem;
     height: 3rem;
   }
 
-  :where(.css-dev-only-do-not-override-11lehqq).ant-list-vertical
+  :where(.ant-list-vertical)
     .ant-list-item
     .ant-list-item-action
     > li:first-child {

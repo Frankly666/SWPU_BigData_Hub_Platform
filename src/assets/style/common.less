@@ -9,9 +9,12 @@
 }
 
 // header下拉框hover样式重置
-:where(.css-dev-only-do-not-override-xlmt2j).ant-dropdown
-  .ant-dropdown-menu
-  .ant-dropdown-menu-title-content
-  > a:hover {
-  color: #1677ff;
+:where(.ant-dropdown-menu-item-active) {
+  .ant-dropdown-menu-title-content:hover {
+    color: #1677ff;
+  }
+
+  .anticon svg {
+    color: #1677ff;
+  }
 }
