@@ -69,6 +69,7 @@ const HeaderRight: FC<IProps> = () => {
     <HeaderRightWrapper02>
       <Dropdown menu={{ items }} placement="bottom">
         <Avatar
+          size={40}
           style={{ backgroundColor: "#1677ff" }}
           icon={<UserOutlined />}
           src={avatar}

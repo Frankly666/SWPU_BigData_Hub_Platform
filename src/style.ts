@@ -48,6 +48,11 @@ export const contentStyle: React.CSSProperties = {
   backgroundColor: "#fff",
   marginTop: "1.25rem"
 };
+export const fullContentStyle: React.CSSProperties = {
+  textAlign: "center",
+  color: "black",
+  backgroundColor: "#fff"
+};
 
 export const footerStyle: React.CSSProperties = {
   textAlign: "center",
@@ -65,6 +70,11 @@ export const contentLayoutStyle: React.CSSProperties = {
   width: "75rem",
   margin: "0 auto",
   paddingTop: "4rem"
+};
+export const fullContentLayoutStyle: React.CSSProperties = {
+  width: "100%",
+  margin: "0 auto",
+  paddingTop: "64px"
 };
 
 export default AppWrapper;

@@ -66,6 +66,7 @@ const Moment: FC<IProps> = () => {
         renderItem={(item) => (
           <List.Item
             key={item.moment_id}
+            style={{ width: "100%" }}
             actions={[<CommentAddIconText key={1} item={item} />]}
           >
             <List.Item.Meta

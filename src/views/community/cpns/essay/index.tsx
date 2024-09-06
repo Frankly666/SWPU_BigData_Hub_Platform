@@ -8,7 +8,7 @@ interface IProps {
 }
 
 const Essay: FC<IProps> = () => {
-  return <EssayWrapper>Essay</EssayWrapper>;
+  return <EssayWrapper></EssayWrapper>;
 };
 
 export default memo(Essay);

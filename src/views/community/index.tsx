@@ -15,6 +15,7 @@ import Moment from "./cpns/moment";
 import Essay from "./cpns/essay";
 import PublishMoment from "../publishMoment";
 import EditComments from "@/base_ui/editComments";
+import { WEB_BASE_URL } from "@/service/config";
 
 interface IProps {
   children?: ReactNode;
@@ -65,7 +66,7 @@ const Community: FC<IProps> = () => {
 
   function handlePublish() {
     if (isMoment) showModal();
-    else navigate("/editEssay");
+    else window.open(`${WEB_BASE_URL}/#/editEssay`, "_blank");
   }
 
   const showModal = () => {

@@ -7,7 +7,6 @@ const User = lazy(() => import("../views/user"));
 const Community = lazy(() => import("../views/community"));
 const Technology = lazy(() => import("../views/technology"));
 const EditEssay = lazy(() => import("../views/editEssay"));
-const PublishMoment = lazy(() => import("../views/publishMoment"));
 
 export const routes: RouteObject[] = [
   {
@@ -33,9 +32,7 @@ export const routes: RouteObject[] = [
   {
     path: "/editEssay",
     element: <EditEssay />
-  },
-  {
-    path: "/publishMoment",
-    element: <PublishMoment />
   }
 ];
+
+export const siderRoutes = ["/community"];

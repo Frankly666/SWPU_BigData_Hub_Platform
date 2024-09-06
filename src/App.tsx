@@ -1,14 +1,16 @@
 import React, { memo, Suspense, useState } from "react";
 import type { FC, ReactNode } from "react";
 import { useLocation, useRoutes } from "react-router";
-import { routes } from "./router";
-import { Layout, Skeleton } from "antd";
+import { routes, siderRoutes } from "./router";
+import { Layout, Skeleton, Spin } from "antd";
 const { Header, Content, Sider } = Layout;
 
 import MyHeader from "./components/header";
 import AppWrapper, {
   contentLayoutStyle,
   contentStyle,
+  fullContentLayoutStyle,
+  fullContentStyle,
   headerStyle,
   layoutStyle,
   siderLeftStyle,
@@ -45,18 +47,21 @@ const App: FC<IProps> = () => {
   return (
     <AppWrapper className="App">
       <Layout style={layoutStyle}>
-        <Header
-          style={{
-            ...headerStyle,
-            transform: isShowHeader ? "translateY(0)" : `translateY(-${64}px)` // 向上移动4rem
-          }}
-        >
-          {<MyHeader></MyHeader>}
-        </Header>
-        {location.pathname === "/home" ? (
-          <Layout style={contentLayoutStyle}>
-            <Suspense fallback={<Skeleton />}>
-              <Content style={contentStyle}>{useRoutes(routes)}</Content>
+        {location.pathname !== "/editEssay" && (
+          <Header
+            style={{
+              ...headerStyle,
+              transform: isShowHeader ? "translateY(0)" : `translateY(-${64}px)` // 向上移动4rem
+            }}
+          >
+            {<MyHeader></MyHeader>}
+          </Header>
+        )}
+
+        {!siderRoutes.includes(location.pathname) ? (
+          <Layout style={fullContentLayoutStyle}>
+            <Suspense fallback={<Spin size="large" />}>
+              <Content style={fullContentStyle}>{useRoutes(routes)}</Content>
             </Suspense>
           </Layout>
         ) : (
