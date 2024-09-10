@@ -5,7 +5,7 @@ import { UploadOutlined } from "@ant-design/icons";
 
 import EnrollFormWrapper from "./style";
 import { BASE_URL } from "@/service/config";
-import { deleteTemAvatar, initAvatar } from "@/service/modules/avatar";
+import { initAvatar } from "@/service/modules/avatar";
 import { enroll } from "@/service/modules/enroll";
 import { IUserInfo } from "@/type/users";
 
@@ -46,9 +46,6 @@ const EnrollForm: FC<IProps> = ({ setEnrollOpen, setLoginOpen }) => {
   const [messageApi, contextHolder] = message.useMessage();
 
   const onFinish = async (values: any) => {
-    // 删除暂存的照片, 因为无用
-    await deleteTemAvatar(realName as string);
-
     const file = values.avatar?.file?.originFileObj;
     const formdata = new FormData();
     formdata.append("avatar", file);
@@ -267,7 +264,7 @@ const EnrollForm: FC<IProps> = ({ setEnrollOpen, setLoginOpen }) => {
           <Upload
             listType="picture"
             disabled={upload}
-            action={BASE_URL + `/file/avatar/init/` + realName}
+            action={BASE_URL + `/file/avatar/init/`}
           >
             <Button type="dashed" icon={<UploadOutlined />} disabled={upload}>
               Upload
