@@ -2,13 +2,16 @@ import React, { memo, useEffect, useRef, useState } from "react";
 import type { FC, ReactNode } from "react";
 import Vditor from "vditor";
 import { Button, Avatar, Input, message, Modal } from "antd";
-import type { MenuProps } from "antd";
 
 import "vditor/dist/index.css";
 
 import EditEssayWrapper from "./style";
 import { useAppSelector } from "@/store";
-import { publishArticle, uploadArticleCover } from "@/service/modules/article";
+import {
+  insertLabels,
+  publishArticle,
+  uploadArticleCover
+} from "@/service/modules/article";
 import { useNavigate } from "react-router";
 import AntForm, { labelDic } from "./cpns/antForm";
 import { IFormInfo } from "@/type/article";
@@ -34,10 +37,9 @@ const EditEssay: FC<IProps> = () => {
     setOpen(true);
   };
 
-  // 确认发布
+  // 确认发布的操作逻辑
   async function confirmPublish(value: IFormInfo) {
-    console.log("value: ", value);
-    // 得到标签和分类后上传文章
+    // 先处理数据
     const category = labelDic[value.category];
     const labels = value.lable.map((item) => {
       return labelDic[item];
@@ -52,12 +54,17 @@ const EditEssay: FC<IProps> = () => {
         content: "标题和内容不能为空!"
       });
     } else {
+      // 上传文章主要信息后得到文章的id
       const res = await publishArticle(
         mdTitle.current,
         mdValue.current,
         category
       );
       const articleId = res.data[0].insertId;
+
+      //  上传标签
+      const res1 = await insertLabels(labels, articleId);
+      console.log("res1: ", res1);
 
       // 下面是上传用户的封面
       if (file) {

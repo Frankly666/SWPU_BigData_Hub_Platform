@@ -13,7 +13,6 @@ import { useAppDispatch, useAppSelector } from "@/store";
 import { changeTagNameAction } from "@/store/modules/main";
 import Moment from "./cpns/moment";
 import Essay from "./cpns/essay";
-import PublishMoment from "../publishMoment";
 import EditComments from "@/base_ui/editComments";
 import { WEB_BASE_URL } from "@/service/config";
 
@@ -47,7 +46,6 @@ const Community: FC<IProps> = () => {
     ],
     []
   );
-  const [isShowPublish, setIsShowPublish] = useState(false);
   const [isMoment, setIsMoment] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -122,16 +120,6 @@ const Community: FC<IProps> = () => {
           setIsMoment(key === "1");
         }}
       />
-      <Modal
-        title="发表动态"
-        style={{ top: 20 }}
-        open={isShowPublish}
-        onOk={() => setIsShowPublish(false)}
-        onCancel={() => setIsShowPublish(false)}
-        maskClosable={false}
-      >
-        <PublishMoment />
-      </Modal>
     </CommunityWrapper>
   );
 };

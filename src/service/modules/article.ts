@@ -17,3 +17,10 @@ export function uploadArticleCover(formdata: FormData, articleId: number) {
     data: formdata
   });
 }
+
+export function insertLabels(label: Array<string>, articleId: number) {
+  return fkRequest.post({
+    url: `/article/label/${articleId}`,
+    data: { label }
+  });
+}
