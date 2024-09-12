@@ -1,4 +1,10 @@
-import React, { memo, useLayoutEffect, useMemo, useState } from "react";
+import React, {
+  memo,
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+  useState
+} from "react";
 import type { FC, ReactNode } from "react";
 import { message, Tabs, Modal, Tooltip } from "antd";
 import {
@@ -78,6 +84,9 @@ const Community: FC<IProps> = () => {
   const handleCancel = () => {
     setIsModalOpen(false);
   };
+  useEffect(() => {
+    document.title = "SWPU BigData Hub";
+  }, []);
 
   return (
     <CommunityWrapper>
