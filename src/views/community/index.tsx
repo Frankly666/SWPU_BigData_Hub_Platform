@@ -33,20 +33,20 @@ const Community: FC<IProps> = () => {
     () => [
       {
         key: "1",
-        label: "动态",
-        children: <Moment />,
-        icon: <SmileOutlined />
-      },
-      {
-        key: "2",
         label: "文章",
         children: <Essay />,
         icon: <ContainerOutlined />
+      },
+      {
+        key: "2",
+        label: "动态",
+        children: <Moment />,
+        icon: <SmileOutlined />
       }
     ],
     []
   );
-  const [isMoment, setIsMoment] = useState(true);
+  const [isMoment, setIsMoment] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // 路由守卫
@@ -117,7 +117,7 @@ const Community: FC<IProps> = () => {
           )
         }
         onTabClick={(key) => {
-          setIsMoment(key === "1");
+          setIsMoment(key === "2");
         }}
       />
     </CommunityWrapper>
