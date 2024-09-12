@@ -24,3 +24,9 @@ export function insertLabels(label: Array<string>, articleId: number) {
     data: { label }
   });
 }
+
+export function getAritcleList() {
+  return fkRequest.get({
+    url: "/article/getArticleList"
+  });
+}

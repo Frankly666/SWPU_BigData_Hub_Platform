@@ -71,7 +71,7 @@ const AntForm: FC<IProps> = ({ confirmFun }) => {
           <Option value="ai">人工智能</Option>
           <Option value="tools">开发工具</Option>
           <Option value="read">阅读</Option>
-          <Option value="codeForLife">代码人生</Option>
+          <Option value="codeLife">代码人生</Option>
         </Select>
       </Form.Item>
 

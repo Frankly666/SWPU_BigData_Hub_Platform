@@ -39,6 +39,7 @@ const EditEssay: FC<IProps> = () => {
 
   // 确认发布的操作逻辑
   async function confirmPublish(value: IFormInfo) {
+    console.log("value: ", value);
     // 先处理数据
     const category = labelDic[value.category];
     const labels = value.lable.map((item) => {
@@ -54,24 +55,32 @@ const EditEssay: FC<IProps> = () => {
         content: "标题和内容不能为空!"
       });
     } else {
-      // 上传文章主要信息后得到文章的id
-      const res = await publishArticle(
-        mdTitle.current,
-        mdValue.current,
-        category
-      );
-      const articleId = res.data[0].insertId;
+      try {
+        // 上传文章主要信息后得到文章的id
+        const res = await publishArticle(
+          mdTitle.current,
+          mdValue.current,
+          category
+        );
 
-      //  上传标签
-      const res1 = await insertLabels(labels, articleId);
-      console.log("res1: ", res1);
+        const articleId = res?.data[0].insertId;
 
-      // 下面是上传用户的封面
-      if (file) {
-        await uploadArticleCover(formdata, articleId);
+        //  上传标签
+        const res1 = await insertLabels(labels, articleId);
+        console.log("res1: ", res1);
+
+        // 下面是上传用户的封面
+        if (file) {
+          await uploadArticleCover(formdata, articleId);
+        }
+
+        navigate("/published");
+      } catch (err) {
+        messageApi.open({
+          type: "error",
+          content: "网络问题!"
+        });
       }
-
-      navigate("/published");
     }
   }
 
