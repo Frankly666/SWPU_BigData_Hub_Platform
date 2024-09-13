@@ -8,6 +8,7 @@ const Community = lazy(() => import("../views/community"));
 const Technology = lazy(() => import("../views/technology"));
 const EditEssay = lazy(() => import("../views/editEssay"));
 const ArticlePublished = lazy(() => import("../views/articlePublished"));
+const ArticleDetail = lazy(() => import("../views/articleDetail"));
 
 export const routes: RouteObject[] = [
   {
@@ -37,7 +38,17 @@ export const routes: RouteObject[] = [
   {
     path: "/published",
     element: <ArticlePublished />
+  },
+  {
+    path: "/articleDetail/:articleId",
+    element: <ArticleDetail />
   }
 ];
 
 export const siderRoutes = ["/community"];
+export const headerRoutes = [
+  "/home",
+  "/community",
+  "/technology",
+  "/published"
+];

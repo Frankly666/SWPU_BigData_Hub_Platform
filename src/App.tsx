@@ -1,7 +1,7 @@
 import React, { memo, Suspense, useState } from "react";
 import type { FC, ReactNode } from "react";
 import { useLocation, useRoutes } from "react-router";
-import { routes, siderRoutes } from "./router";
+import { headerRoutes, routes, siderRoutes } from "./router";
 import { Layout, Skeleton, Spin } from "antd";
 const { Header, Content, Sider } = Layout;
 
@@ -47,7 +47,7 @@ const App: FC<IProps> = () => {
   return (
     <AppWrapper className="App">
       <Layout style={layoutStyle}>
-        {location.pathname !== "/editEssay" && (
+        {headerRoutes.includes(location.pathname) && (
           <Header
             style={{
               ...headerStyle,
