@@ -46,9 +46,4 @@ export const routes: RouteObject[] = [
 ];
 
 export const siderRoutes = ["/community"];
-export const headerRoutes = [
-  "/home",
-  "/community",
-  "/technology",
-  "/published"
-];
+export const headerRoutes = ["/editEssay"];

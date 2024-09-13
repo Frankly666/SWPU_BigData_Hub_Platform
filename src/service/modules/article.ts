@@ -30,3 +30,9 @@ export function getAritcleList() {
     url: "/article/getArticleList"
   });
 }
+
+export function getAritcleDetail(articleId: string) {
+  return fkRequest.get({
+    url: `/article/getArticle/${articleId}`
+  });
+}

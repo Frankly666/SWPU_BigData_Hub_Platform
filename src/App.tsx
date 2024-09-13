@@ -47,7 +47,7 @@ const App: FC<IProps> = () => {
   return (
     <AppWrapper className="App">
       <Layout style={layoutStyle}>
-        {headerRoutes.includes(location.pathname) && (
+        {!headerRoutes.includes(location.pathname) && (
           <Header
             style={{
               ...headerStyle,
