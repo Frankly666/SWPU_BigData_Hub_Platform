@@ -1,5 +1,8 @@
 import { useAppDispatch } from "@/store";
-import { changeIsShowHeaderAction } from "@/store/modules/main";
+import {
+  changeIsOutlineFixed,
+  changeIsShowHeaderAction
+} from "@/store/modules/main";
 import _ from "lodash";
 import { useEffect } from "react";
 
@@ -8,6 +11,7 @@ export function useListenScroll() {
   const handleScroll = _.throttle(() => {
     const top = document.documentElement.scrollTop;
     dispatch(changeIsShowHeaderAction(top < 300));
+    dispatch(changeIsOutlineFixed(top > 800));
   }, 100); // 在100毫秒内最多执行一次
 
   useEffect(() => {

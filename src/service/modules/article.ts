@@ -31,7 +31,7 @@ export function getAritcleList() {
   });
 }
 
-export function getAritcleDetail(articleId: string) {
+export function getArticleDetail(articleId: string) {
   return fkRequest.get({
     url: `/article/getArticle/${articleId}`
   });

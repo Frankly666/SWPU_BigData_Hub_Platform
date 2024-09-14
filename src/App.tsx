@@ -16,7 +16,6 @@ import useFlushedData from "./hooks/useFlushedData";
 import Loading from "@/components/loading";
 import { useAppSelector } from "@/store";
 import { useListenScroll } from "./hooks/useListenScroll";
-import useScreenWidthListener from "./hooks/useScreenWidthListener";
 
 interface IProps {
   children?: ReactNode;
@@ -28,10 +27,6 @@ const App: FC<IProps> = () => {
       isShowLoading: state.main.isShowLoading,
       isShowHeader: state.main.isShowHeader
     };
-  });
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
-  useScreenWidthListener((width) => {
-    setScreenWidth(width);
   });
 
   // 自定义hook的使用

@@ -7,13 +7,15 @@ interface IState {
   isShowLoading: boolean;
   tagName: ITags;
   isShowHeader: boolean;
+  isOutlineFixed: boolean;
 }
 
 const initialState: IState = {
   isLogin: localStorage.getItem(LOGIN_TOKEN) ? true : false,
   isShowLoading: false,
   tagName: "",
-  isShowHeader: true
+  isShowHeader: true,
+  isOutlineFixed: false
 };
 
 const mainSlice = createSlice({
@@ -31,6 +33,9 @@ const mainSlice = createSlice({
     },
     changeIsShowHeaderAction(state, { payload }) {
       state.isShowHeader = payload;
+    },
+    changeIsOutlineFixed(state, { payload }) {
+      state.isOutlineFixed = payload;
     }
   }
 });
@@ -39,6 +44,7 @@ export const {
   changeIsLoginAction,
   changeIsShowLoadingAction,
   changeTagNameAction,
-  changeIsShowHeaderAction
+  changeIsShowHeaderAction,
+  changeIsOutlineFixed
 } = mainSlice.actions;
 export default mainSlice.reducer;
