@@ -7,14 +7,10 @@ const { Header, Content, Sider } = Layout;
 
 import MyHeader from "./components/header";
 import AppWrapper, {
-  contentLayoutStyle,
-  contentStyle,
   fullContentLayoutStyle,
   fullContentStyle,
   headerStyle,
-  layoutStyle,
-  siderLeftStyle,
-  siderRightStyle
+  layoutStyle
 } from "./style";
 import useFlushedData from "./hooks/useFlushedData";
 import Loading from "@/components/loading";
@@ -58,44 +54,12 @@ const App: FC<IProps> = () => {
           </Header>
         )}
 
-        {!siderRoutes.includes(location.pathname) ? (
-          <Layout style={fullContentLayoutStyle}>
-            <Suspense fallback={<Spin size="large" />}>
-              <Content style={fullContentStyle}>{useRoutes(routes)}</Content>
-            </Suspense>
-          </Layout>
-        ) : (
-          <Layout style={contentLayoutStyle}>
-            {screenWidth > 1190 && (
-              <Sider
-                width="10%"
-                style={{
-                  ...siderLeftStyle,
-                  transform: isShowHeader
-                    ? "translateY(0)"
-                    : `translateY(-${64}px)`
-                }}
-              >
-                SiderLeft
-              </Sider>
-            )}
-            <Suspense fallback={<Skeleton />}>
-              <Content
-                style={{
-                  ...contentStyle,
-                  marginLeft: screenWidth > 1190 ? "16.5%" : "0"
-                }}
-              >
-                {useRoutes(routes)}
-              </Content>
-            </Suspense>
-            {screenWidth > 1190 && (
-              <Sider width="20%" style={siderRightStyle}>
-                SiderRight
-              </Sider>
-            )}
-          </Layout>
-        )}
+        <Layout style={fullContentLayoutStyle}>
+          <Suspense fallback={<Spin size="large" />}>
+            <Content style={fullContentStyle}>{useRoutes(routes)}</Content>
+          </Suspense>
+        </Layout>
+
         {/* 这个加载中的蒙版只有在登录时才会展示 */}
         {isShowLoading ? <Loading /> : ""}
       </Layout>

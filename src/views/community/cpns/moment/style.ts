@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 const MomentWrapper = styled.div`
+  padding: 0 20px;
   :where(.ant-list-item-meta-content) {
     text-align: left;
   }

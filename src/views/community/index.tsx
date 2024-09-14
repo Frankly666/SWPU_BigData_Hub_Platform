@@ -105,30 +105,37 @@ const Community: FC<IProps> = () => {
           buttonText="发布"
         />
       </Modal>
-      <Tabs
-        defaultActiveKey="1"
-        items={items}
-        tabBarExtraContent={
-          isMoment ? (
-            <Tooltip title="发表动态" color={"blue"} key={"blue"}>
-              <FormOutlined
-                style={{ fontSize: "17px" }}
-                onClick={handlePublish}
-              />
-            </Tooltip>
-          ) : (
-            <Tooltip title="写文章" color={"blue"} key={"blue"}>
-              <FormOutlined
-                style={{ fontSize: "17px" }}
-                onClick={handlePublish}
-              />
-            </Tooltip>
-          )
-        }
-        onTabClick={(key) => {
-          setIsMoment(key === "2");
-        }}
-      />
+      <div className="comLeft"></div>
+      <div className="comContent">
+        <Tabs
+          defaultActiveKey="1"
+          items={items}
+          tabBarExtraContent={
+            isMoment ? (
+              <Tooltip title="发表动态" color={"blue"} key={"blue"}>
+                <FormOutlined
+                  style={{ fontSize: "17px" }}
+                  onClick={handlePublish}
+                />
+              </Tooltip>
+            ) : (
+              <Tooltip title="写文章" color={"blue"} key={"blue"}>
+                <FormOutlined
+                  style={{ fontSize: "17px" }}
+                  onClick={handlePublish}
+                />
+              </Tooltip>
+            )
+          }
+          onTabClick={(key) => {
+            setIsMoment(key === "2");
+          }}
+          style={{ paddingLeft: "10px" }}
+        />
+      </div>
+      <div className="comRight">
+        <div className="card"></div>
+      </div>
     </CommunityWrapper>
   );
 };
