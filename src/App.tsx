@@ -1,9 +1,9 @@
-import React, { memo, Suspense, useState } from "react";
+import React, { memo, Suspense } from "react";
 import type { FC, ReactNode } from "react";
 import { useLocation, useRoutes } from "react-router";
-import { headerRoutes, routes, siderRoutes } from "./router";
-import { Layout, Skeleton, Spin } from "antd";
-const { Header, Content, Sider } = Layout;
+import { headerRoutes, routes } from "./router";
+import { Layout, Spin } from "antd";
+const { Header, Content } = Layout;
 
 import MyHeader from "./components/header";
 import AppWrapper, {
