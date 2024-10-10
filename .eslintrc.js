@@ -22,6 +22,7 @@ module.exports = {
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-non-null-assertion": "off",
     "react/no-unknown-property": "off",
-    "react/display-name": "off"
+    "react/display-name": "off",
+    "no-useless-escape": "off"
   }
 };

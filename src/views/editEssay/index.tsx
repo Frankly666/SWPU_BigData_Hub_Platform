@@ -15,6 +15,9 @@ import {
 import { useNavigate } from "react-router";
 import AntForm, { labelDic } from "./cpns/antForm";
 import { IFormInfo } from "@/type/article";
+import { BASE_URL } from "@/service/config";
+import { localCache } from "@/utils/cache";
+import { LOGIN_TOKEN } from "@/global/constant";
 
 interface IProps {
   children?: ReactNode;
@@ -88,6 +91,24 @@ const EditEssay: FC<IProps> = () => {
     const vditor = new Vditor("vditor", {
       height: "100vh",
       placeholder: "欢迎来到编辑页面",
+      upload: {
+        accept: "image/*,.mp3, .wav, .rar",
+        token: localCache.getCache(LOGIN_TOKEN),
+        url: `${BASE_URL}/article/temCover`,
+        linkToImgUrl: `${BASE_URL}/article/temCover`,
+        file: (file) => {
+          console.log("file: ", file);
+          return file;
+        }
+        // filename(name) {
+        //   console.log("name: ", name);
+        //   return name;
+        //   // return name
+        //   //   .replace(/[^(a-zA-Z0-9\u4e00-\u9fa5\.)]/g, "")
+        //   //   .replace(/[\?\\/:|<>\*\[\]\(\)\$%\{\}@~]/g, "")
+        //   //   .replace(/\s/g, ""); // 修正正则表达式
+        // }
+      },
       input: (value) => {
         mdValue.current = value;
         console.log("mdValue.current: ", mdValue.current);

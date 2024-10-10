@@ -3,6 +3,7 @@ import { Provider } from "react-redux";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
+import "./main.css";
 import "normalize.css";
 import "./assets/style/index.less";
 

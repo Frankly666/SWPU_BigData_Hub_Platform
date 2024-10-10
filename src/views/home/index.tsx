@@ -3,6 +3,9 @@ import type { FC, ReactNode } from "react";
 
 import { useAppDispatch } from "@/store";
 import { changeTagNameAction } from "@/store/modules/main";
+import { AuroraBackgroundDemo } from "./cpns/HomeShow";
+
+import MainWrapper from "./style";
 
 interface IProps {
   children?: ReactNode;
@@ -16,9 +19,9 @@ const Home: FC<IProps> = () => {
   }, []);
 
   return (
-    <div>
-      <h2>home</h2>
-    </div>
+    <MainWrapper>
+      <AuroraBackgroundDemo />
+    </MainWrapper>
   );
 };
 

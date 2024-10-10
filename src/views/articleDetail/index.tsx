@@ -110,22 +110,6 @@ const ArticleDetail: FC<IProps> = () => {
     }
   }, [articleDetail]);
 
-  // const handleAnchorClick = (
-  //   e: React.MouseEvent<HTMLElement>,
-  //   link: { title: ReactNode; href: string }
-  // ) => {
-  //   e.preventDefault();
-  //   const targetElement = document.getElementById(link.href.substring(1));
-  //   if (targetElement) {
-  //     const headerHeight = 60; // 假设 header 的高度为 60px
-  //     const offsetTop =
-  //       targetElement.getBoundingClientRect().top +
-  //       window.scrollY -
-  //       headerHeight;
-  //     window.scrollTo({ top: offsetTop, behavior: "smooth" });
-  //   }
-  // };
-
   const handleAnchorClick = (
     e: React.MouseEvent<HTMLElement>,
     link: { title: ReactNode; href: string }
